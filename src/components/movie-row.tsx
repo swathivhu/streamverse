@@ -24,7 +24,7 @@ export default function MovieRow({ title, movies }: MovieRowProps) {
 
   return (
     <div 
-      className="space-y-4 py-4 group relative"
+      className="space-y-4 py-6 group relative"
       onMouseEnter={() => setShowArrows(true)}
       onMouseLeave={() => setShowArrows(false)}
     >
@@ -33,7 +33,7 @@ export default function MovieRow({ title, movies }: MovieRowProps) {
         <span className="inline-block opacity-0 group-hover:opacity-100 ml-2 text-primary text-sm font-medium transition-all duration-300">Explore all →</span>
       </h2>
       
-      <div className="relative overflow-visible">
+      <div className="relative overflow-visible group/row">
         <button 
           onClick={() => scroll('left')}
           className={cn(
@@ -46,14 +46,14 @@ export default function MovieRow({ title, movies }: MovieRowProps) {
 
         <div 
           ref={rowRef}
-          className="flex gap-2 md:gap-4 overflow-x-auto px-4 md:px-12 hide-scrollbar scroll-smooth py-4"
+          className="flex gap-2 md:gap-4 overflow-x-auto px-4 md:px-12 hide-scrollbar scroll-smooth py-6"
         >
           {movies.map((movie) => (
             <div 
               key={movie.id} 
-              className="flex-none w-[150px] md:w-[240px] aspect-[16/9] relative rounded-md overflow-visible group/item cursor-pointer transform transition-all duration-300 hover:scale-110 hover:z-50"
+              className="flex-none w-[160px] md:w-[260px] aspect-[16/9] relative rounded-md overflow-visible group/item cursor-pointer transform transition-all duration-300 hover:scale-110 hover:z-50"
             >
-              <div className="w-full h-full rounded-md overflow-hidden bg-zinc-900 shadow-lg">
+              <div className="w-full h-full rounded-md overflow-hidden bg-zinc-900 shadow-xl border border-white/5">
                 <img 
                   src={movie.thumbnail} 
                   alt={movie.title} 
@@ -62,7 +62,7 @@ export default function MovieRow({ title, movies }: MovieRowProps) {
               </div>
               
               {/* Detailed Card Overlay on Hover */}
-              <div className="absolute top-0 left-0 w-full h-full bg-zinc-900 opacity-0 group-hover/item:opacity-100 transition-all duration-300 rounded-md shadow-2xl scale-110 flex flex-col pointer-events-none group-hover/item:pointer-events-auto">
+              <div className="absolute top-0 left-0 w-full h-full bg-zinc-900 opacity-0 group-hover/item:opacity-100 transition-all duration-300 rounded-md shadow-[0_0_30px_rgba(0,0,0,0.8)] scale-110 flex flex-col pointer-events-none group-hover/item:pointer-events-auto z-50">
                 <img 
                   src={movie.thumbnail} 
                   alt={movie.title} 
@@ -71,15 +71,15 @@ export default function MovieRow({ title, movies }: MovieRowProps) {
                 <div className="p-4 space-y-3">
                   <div className="flex items-center justify-between">
                     <div className="flex gap-2">
-                      <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black hover:bg-zinc-200 transition-colors">
-                        <Play className="w-4 h-4 fill-current" />
+                      <button className="w-9 h-9 bg-white rounded-full flex items-center justify-center text-black hover:bg-zinc-200 transition-all active:scale-90">
+                        <Play className="w-5 h-5 fill-current" />
                       </button>
-                      <button className="w-8 h-8 border-2 border-zinc-600 rounded-full flex items-center justify-center text-white hover:border-white transition-colors">
-                        <Plus className="w-4 h-4" />
+                      <button className="w-9 h-9 border-2 border-zinc-600 rounded-full flex items-center justify-center text-white hover:border-white transition-all active:scale-90">
+                        <Plus className="w-5 h-5" />
                       </button>
                     </div>
-                    <button className="w-8 h-8 border-2 border-zinc-600 rounded-full flex items-center justify-center text-white hover:border-white transition-colors ml-auto">
-                      <Info className="w-4 h-4" />
+                    <button className="w-9 h-9 border-2 border-zinc-600 rounded-full flex items-center justify-center text-white hover:border-white transition-all active:scale-90 ml-auto">
+                      <Info className="w-5 h-5" />
                     </button>
                   </div>
                   <div className="space-y-1">
@@ -89,7 +89,7 @@ export default function MovieRow({ title, movies }: MovieRowProps) {
                       <span className="border border-zinc-600 px-1 text-zinc-400">16+</span>
                       <span className="text-zinc-400">2h 14m</span>
                     </div>
-                    <p className="text-zinc-400 text-[10px] uppercase tracking-wider">{movie.genre}</p>
+                    <p className="text-zinc-400 text-[10px] uppercase tracking-wider font-semibold">{movie.genre}</p>
                   </div>
                 </div>
               </div>
