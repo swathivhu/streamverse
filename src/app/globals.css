@@ -40,10 +40,9 @@
 .hero-gradient-overlay {
   background: linear-gradient(to top, 
     hsl(var(--background)) 0%, 
-    hsl(var(--background) / 0.98) 15%, 
-    hsl(var(--background) / 0.7) 35%, 
-    hsl(var(--background) / 0.1) 70%, 
-    transparent 100%
+    hsl(var(--background) / 0.95) 12%, 
+    hsl(var(--background) / 0.3) 28%, 
+    transparent 40%
   );
 }
 

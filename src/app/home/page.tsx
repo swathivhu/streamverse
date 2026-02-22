@@ -25,8 +25,8 @@ export default function HomePage() {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-4 border-[#E50914] border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-[#E50914] text-xs font-black tracking-[0.2em] uppercase animate-pulse">StreamVerse</p>
+          <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-primary text-xs font-black tracking-[0.2em] uppercase animate-pulse">StreamVerse</p>
         </div>
       </div>
     );
@@ -46,25 +46,25 @@ export default function HomePage() {
             alt="Hero Banner" 
             fill
             priority
-            className="object-cover contrast-[1.2] saturate-[1.2] brightness-75 blur-[1px] animate-in zoom-in-105 duration-[30000ms] fill-mode-forwards"
+            className="object-cover contrast-[1.25] saturate-[1.25] brightness-75 blur-[1px] animate-in zoom-in-105 duration-[30000ms] fill-mode-forwards"
             data-ai-hint="cinema movie"
           />
           <div className="absolute inset-0 hero-gradient-overlay z-10" />
-          <div className="absolute inset-0 bg-black/60 z-10" />
+          <div className="absolute inset-0 bg-black/40 z-10" />
         </div>
         
         <div className="relative z-20 flex-grow flex flex-col justify-center pt-40 pb-40 px-8 md:px-20 max-w-screen-2xl mx-auto w-full">
           <div className="space-y-8 max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000 mt-12">
             <div className="flex items-center gap-3">
-              <span className="bg-[#E50914] px-3 py-1 rounded-sm text-white font-black tracking-widest text-[10px] uppercase shadow-[0_0_15px_rgba(229,9,20,0.5)]">
+              <span className="bg-primary px-3 py-1 rounded-sm text-white font-black tracking-widest text-[10px] uppercase shadow-[0_0_15px_rgba(229,9,20,0.5)]">
                 StreamVerse Original
               </span>
             </div>
             
             <div className="relative">
-              <div className="absolute -inset-x-20 -inset-y-10 bg-[#E50914]/10 blur-[120px] rounded-full z-0 pointer-events-none" />
+              <div className="absolute -inset-x-20 -inset-y-10 bg-primary/10 blur-[120px] rounded-full z-0 pointer-events-none" />
               <h1 className="relative z-10 text-5xl md:text-6xl font-black text-white leading-[0.95] tracking-tighter uppercase">
-                CHRONO <br /> <span className="text-[#E50914]">ECHOES</span>
+                CHRONO <br /> <span className="text-primary">ECHOES</span>
               </h1>
             </div>
             
@@ -73,7 +73,7 @@ export default function HomePage() {
             </p>
             
             <div className="flex flex-wrap gap-4 pt-4">
-              <Button size="lg" className="bg-[#E50914] hover:bg-[#ff0a16] text-white h-14 px-10 text-sm font-bold rounded-sm flex items-center gap-3 transition-all active:scale-95 border-none shadow-lg">
+              <Button size="lg" className="bg-primary hover:brightness-110 text-white h-14 px-10 text-sm font-bold rounded-sm flex items-center gap-3 transition-all active:scale-95 border-none shadow-lg">
                 <Play className="fill-current w-6 h-6" /> Play
               </Button>
               <Button size="lg" variant="secondary" className="bg-zinc-500/30 hover:bg-zinc-500/50 backdrop-blur-sm text-white border-none h-14 px-10 text-sm font-bold rounded-sm flex items-center gap-3 transition-all active:scale-95">
@@ -112,7 +112,7 @@ export default function HomePage() {
         <div className="max-w-screen-2xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-16 mb-24">
             <div className="space-y-8">
-              <div className="flex items-center gap-2 text-[#E50914]">
+              <div className="flex items-center gap-2 text-primary">
                 <Clapperboard className="w-8 h-8" />
                 <span className="text-2xl font-black uppercase tracking-tighter">StreamVerse</span>
               </div>
