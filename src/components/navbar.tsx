@@ -68,7 +68,7 @@ export default function Navbar() {
             </span>
           </Link>
           
-          <div className="hidden lg:flex items-center gap-8 h-full text-sm font-bold tracking-wider uppercase">
+          <div className="hidden lg:flex items-center gap-8 h-full text-[15px] font-semibold tracking-widest uppercase">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -76,13 +76,13 @@ export default function Navbar() {
                   key={link.name} 
                   href={link.href} 
                   className={cn(
-                    "transition-colors duration-200 relative py-2 flex items-center h-full",
+                    "transition-colors duration-200 relative flex items-center h-full",
                     isActive ? "text-white" : "text-zinc-400 hover:text-zinc-100"
                   )}
                 >
                   {link.name}
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 w-full h-[4px] bg-primary shadow-[0_0_10px_rgba(229,9,20,0.5)]" />
+                    <span className="absolute bottom-0 left-0 w-full h-[4px] bg-primary shadow-[0_0_15px_rgba(229,9,20,0.6)]" />
                   )}
                 </Link>
               );
@@ -100,7 +100,7 @@ export default function Navbar() {
           </div>
 
           <div className="hidden md:flex flex-col items-end shrink-0 pl-4">
-            <span className="text-[11px] font-black text-white tracking-widest uppercase">{userData?.username || 'MEMBER'}</span>
+            <span className="text-[11px] font-semibold text-white tracking-widest uppercase">{userData?.username || 'MEMBER'}</span>
           </div>
           
           <DropdownMenu>
