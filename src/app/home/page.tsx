@@ -39,7 +39,7 @@ export default function HomePage() {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] w-full flex flex-col pt-20">
+      <section className="relative min-h-[85vh] w-full flex flex-col pt-20">
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image 
             src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&q=80" 
@@ -53,7 +53,7 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-black/40 z-10" />
         </div>
         
-        <div className="relative z-20 flex-grow flex flex-col justify-center pt-24 pb-40 px-8 md:px-20 max-w-screen-2xl mx-auto w-full">
+        <div className="relative z-20 flex-grow flex flex-col justify-center pt-16 pb-20 px-8 md:px-20 max-w-screen-2xl mx-auto w-full">
           <div className="space-y-8 max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000 mt-6">
             <div className="flex items-center gap-3">
               <span className="bg-primary px-3 py-1 rounded-sm text-white font-black tracking-widest text-[10px] uppercase shadow-[0_0_15px_rgba(229,9,20,0.5)]">
