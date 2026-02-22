@@ -68,7 +68,7 @@ export default function Navbar() {
             </span>
           </Link>
           
-          <div className="hidden lg:flex items-center gap-6 text-[11px] font-bold tracking-wider uppercase">
+          <div className="hidden lg:flex items-center gap-6 text-xs font-bold tracking-wider uppercase">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -82,7 +82,7 @@ export default function Navbar() {
                 >
                   {link.name}
                   {isActive && (
-                    <span className="absolute -bottom-[20px] left-0 w-full h-[3px] bg-primary" />
+                    <span className="absolute -bottom-[21px] left-0 w-full h-[4px] bg-primary" />
                   )}
                 </Link>
               );

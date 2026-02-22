@@ -48,11 +48,11 @@ export default function HomePage() {
             alt="Hero Banner" 
             fill
             priority
-            className="object-cover contrast-[1.2] animate-in zoom-in-105 duration-[30000ms] fill-mode-forwards"
+            className="object-cover contrast-[1.2] saturate-[1.2] brightness-90 animate-in zoom-in-105 duration-[30000ms] fill-mode-forwards"
             data-ai-hint="cinema movie"
           />
           <div className="absolute inset-0 hero-gradient-overlay z-10" />
-          <div className="absolute inset-0 bg-black/30 z-10" />
+          <div className="absolute inset-0 bg-black/40 z-10" />
         </div>
         
         <div className="relative z-20 h-full flex flex-col justify-end pb-32 px-8 md:px-20 max-w-screen-2xl mx-auto w-full">
@@ -64,7 +64,7 @@ export default function HomePage() {
             </div>
             
             <div className="relative">
-              <div className="absolute -inset-x-20 -inset-y-10 bg-primary/10 blur-[120px] rounded-full z-0 pointer-events-none" />
+              <div className="absolute -inset-x-20 -inset-y-10 bg-primary/20 blur-[140px] rounded-full z-0 pointer-events-none" />
               <h1 className="relative z-10 text-5xl md:text-7xl font-black text-white leading-[0.95] tracking-tighter uppercase italic">
                 CHRONO <br /> <span className="text-primary">ECHOES</span>
               </h1>
@@ -75,7 +75,7 @@ export default function HomePage() {
             </p>
             
             <div className="flex flex-wrap gap-4 pt-4">
-              <Button size="lg" className="bg-white hover:bg-zinc-200 text-black h-14 px-10 text-sm font-black rounded-sm flex items-center gap-3 transition-all active:scale-95">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white h-14 px-10 text-sm font-black rounded-sm flex items-center gap-3 transition-all active:scale-95 border-none">
                 <Play className="fill-current w-6 h-6" /> Play
               </Button>
               <Button size="lg" variant="secondary" className="bg-zinc-500/30 hover:bg-zinc-500/50 backdrop-blur-sm text-white border-none h-14 px-10 text-sm font-black rounded-sm flex items-center gap-3 transition-all active:scale-95">
@@ -87,7 +87,7 @@ export default function HomePage() {
       </section>
 
       {/* Main Content - High Contrast Rows */}
-      <main className="relative z-10 flex-grow bg-black">
+      <main className="relative z-10 flex-grow bg-black -mt-32">
         <div className="space-y-24 pb-48">
           {continueWatching.length > 0 && (
             <div className="animate-in fade-in duration-1000">
