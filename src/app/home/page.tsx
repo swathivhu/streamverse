@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect } from 'react';
@@ -39,7 +40,7 @@ export default function HomePage() {
       <Navbar />
       
       {/* Cinematic Hero Banner Section */}
-      <section className="relative h-[90vh] w-full flex-shrink-0 overflow-hidden">
+      <section className="relative h-[85vh] w-full flex-shrink-0 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image 
             src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&q=80" 
@@ -50,8 +51,8 @@ export default function HomePage() {
             data-ai-hint="cinema movie"
           />
           {/* Multi-layered cinematic gradients */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent z-10" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent z-10" />
         </div>
         
         <div className="relative z-20 h-full flex flex-col justify-end pb-24 px-6 md:px-16 max-w-7xl mx-auto w-full">
@@ -88,8 +89,8 @@ export default function HomePage() {
 
       {/* Main Content Area */}
       <main className="relative z-10 flex-grow bg-background">
-        <div className="space-y-12 pb-32 -mt-16 relative z-30">
-          {CATEGORIES.map((category, index) => (
+        <div className="space-y-24 pb-32 pt-12">
+          {CATEGORIES.map((category) => (
             <div key={category.name}>
               <MovieRow title={category.name} movies={category.items} />
             </div>
