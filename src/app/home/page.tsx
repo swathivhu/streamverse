@@ -40,7 +40,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-transparent flex flex-col overflow-x-hidden">
       <Navbar />
       
-      {/* Hero Section - Balanced height and clear hierarchy */}
+      {/* Hero Section - Refined for visual balance */}
       <section className="relative h-[85vh] w-full flex-shrink-0 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image 
@@ -51,48 +51,48 @@ export default function HomePage() {
             className="object-cover animate-in zoom-in-105 duration-[15000ms] fill-mode-forwards"
             data-ai-hint="cinema movie"
           />
-          {/* Multi-layered cinematic overlays */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-transparent z-10" />
-          <div className="absolute inset-0 bg-black/30 z-10" />
+          {/* Multi-layered cinematic overlays - darkened for better contrast */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-transparent to-transparent z-10" />
+          <div className="absolute inset-0 bg-black/40 z-10" />
         </div>
         
-        <div className="relative z-20 h-full flex flex-col justify-end pb-24 px-6 md:px-16 max-w-screen-2xl mx-auto w-full">
-          <div className="space-y-6 max-w-2xl animate-in fade-in slide-in-from-bottom-6 duration-700">
+        <div className="relative z-20 h-full flex flex-col justify-end pb-28 px-6 md:px-16 max-w-screen-2xl mx-auto w-full">
+          <div className="space-y-6 max-w-xl animate-in fade-in slide-in-from-bottom-6 duration-700">
             <div className="flex items-center gap-3">
-              <span className="bg-primary px-2 py-0.5 rounded-sm text-white font-black tracking-widest text-[10px] uppercase">
+              <span className="bg-primary/90 px-2 py-0.5 rounded-sm text-white font-black tracking-widest text-[10px] uppercase">
                 Original
               </span>
-              <span className="text-white/60 font-bold tracking-widest text-[10px] uppercase">
+              <span className="text-white/50 font-bold tracking-widest text-[10px] uppercase">
                 Season 1 Now Streaming
               </span>
             </div>
             
-            <h1 className="text-6xl md:text-8xl font-black text-white leading-[0.9] tracking-tighter uppercase drop-shadow-2xl">
+            <h1 className="text-5xl md:text-7xl font-black text-white leading-[0.95] tracking-tighter uppercase">
               CHRONO <br /> <span className="text-primary">ECHOES</span>
             </h1>
             
-            <p className="text-base md:text-lg text-zinc-200 leading-relaxed max-w-lg font-medium drop-shadow-md">
+            <p className="text-sm md:text-base text-zinc-300 leading-[1.8] max-w-lg font-medium">
               A daring scientist uncovers the price of altering history when she begins receiving warnings from her future self.
             </p>
             
             <div className="flex flex-wrap gap-4 pt-4">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white h-14 px-10 text-lg font-bold rounded-md flex items-center gap-2 transition-transform active:scale-95 shadow-xl">
-                <Play className="fill-current w-6 h-6" /> Play
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white h-12 px-8 text-base font-bold rounded-md flex items-center gap-2 transition-transform active:scale-95 shadow-lg">
+                <Play className="fill-current w-5 h-5" /> Play
               </Button>
-              <Button size="lg" variant="secondary" className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 h-14 px-10 text-lg font-bold rounded-md flex items-center gap-2 transition-transform active:scale-95">
-                <Info className="w-6 h-6" /> More Info
+              <Button size="lg" variant="secondary" className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 h-12 px-8 text-base font-bold rounded-md flex items-center gap-2 transition-transform active:scale-95">
+                <Info className="w-5 h-5" /> More Info
               </Button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Main Content - Breathable layout with consistent vertical spacing */}
-      <main className="relative z-10 flex-grow bg-transparent -mt-16 md:-mt-24">
+      {/* Main Content - Improved spacing and cleaner hierarchy */}
+      <main className="relative z-10 flex-grow bg-transparent">
         <div className="space-y-24 pb-32">
           {continueWatching.length > 0 && (
-            <div className="animate-in fade-in duration-700">
+            <div className="animate-in fade-in duration-700 pt-12">
               <MovieRow title="Continue Watching" movies={continueWatching} />
             </div>
           )}
