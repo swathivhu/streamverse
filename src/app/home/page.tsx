@@ -53,8 +53,8 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-black/40 z-10" />
         </div>
         
-        <div className="relative z-20 flex-grow flex flex-col justify-center pt-40 pb-40 px-8 md:px-20 max-w-screen-2xl mx-auto w-full">
-          <div className="space-y-8 max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000 mt-12">
+        <div className="relative z-20 flex-grow flex flex-col justify-center pt-24 pb-40 px-8 md:px-20 max-w-screen-2xl mx-auto w-full">
+          <div className="space-y-8 max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000 mt-6">
             <div className="flex items-center gap-3">
               <span className="bg-primary px-3 py-1 rounded-sm text-white font-black tracking-widest text-[10px] uppercase shadow-[0_0_15px_rgba(229,9,20,0.5)]">
                 StreamVerse Original
