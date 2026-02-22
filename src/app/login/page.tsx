@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -52,7 +53,6 @@ export default function LoginPage() {
       });
       router.push('/home');
     } catch (error: any) {
-      console.error(error);
       let message = "Invalid email or password.";
       if (error.code === 'auth/user-not-found') message = "No account found with this email.";
       if (error.code === 'auth/wrong-password') message = "Incorrect password.";

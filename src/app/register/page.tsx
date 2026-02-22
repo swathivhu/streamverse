@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -5,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-import { useAuth, useFirestore } from '@/firebase';
+import { useAuth, useFirestore, errorEmitter, FirestorePermissionError } from '@/firebase';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -54,20 +55,30 @@ export default function RegisterPage() {
       const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
       const user = userCredential.user;
 
-      // 2. Store additional details in Firestore
-      await setDoc(doc(db, "users", user.uid), {
+      // 2. Store additional details in Firestore (using the recommended non-blocking pattern)
+      const userRef = doc(db, "users", user.uid);
+      const userData = {
         id: user.uid,
         username: formData.username,
         email: formData.email,
         phoneNumber: formData.phone,
         registrationDate: new Date().toISOString(),
         viewingHistory: ['Interstellar Journey', 'The Dark Night', 'Robot Dreams'],
+      };
+
+      // Non-blocking write to Firestore
+      setDoc(userRef, userData).catch(async (error) => {
+        const permissionError = new FirestorePermissionError({
+          path: userRef.path,
+          operation: 'create',
+          requestResourceData: userData,
+        });
+        errorEmitter.emit('permission-error', permissionError);
       });
 
       toast({ title: "Success", description: "Account created successfully!" });
       router.push('/home');
     } catch (error: any) {
-      console.error(error);
       let message = "Could not complete registration.";
       if (error.code === 'auth/email-already-in-use') message = "Email already in use.";
       if (error.code === 'auth/weak-password') message = "Password is too weak.";
