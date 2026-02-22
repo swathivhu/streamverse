@@ -25,8 +25,8 @@ export default function HomePage() {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-zinc-600 text-xs font-semibold tracking-widest uppercase animate-pulse">StreamVerse</p>
+          <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-primary text-xs font-black tracking-[0.2em] uppercase animate-pulse">StreamVerse</p>
         </div>
       </div>
     );
@@ -37,69 +37,65 @@ export default function HomePage() {
   const continueWatching = MOVIES.filter(movie => movie.progress !== undefined).slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-transparent flex flex-col overflow-x-hidden">
+    <div className="min-h-screen bg-black flex flex-col overflow-x-hidden">
       <Navbar />
       
-      {/* Hero Section - Balanced visual rhythm with enhanced vibrance */}
-      <section className="relative h-[80vh] w-full flex-shrink-0 overflow-hidden">
+      {/* Hero Section - Bold Cinematic Presence */}
+      <section className="relative h-[85vh] w-full flex-shrink-0 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image 
             src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&q=80" 
             alt="Hero Banner" 
             fill
             priority
-            className="object-cover blur-[1px] contrast-[1.05] animate-in zoom-in-105 duration-[20000ms] fill-mode-forwards"
+            className="object-cover contrast-[1.2] animate-in zoom-in-105 duration-[30000ms] fill-mode-forwards"
             data-ai-hint="cinema movie"
           />
           <div className="absolute inset-0 hero-gradient-overlay z-10" />
-          <div className="absolute inset-0 bg-black/55 z-10" />
+          <div className="absolute inset-0 bg-black/30 z-10" />
         </div>
         
-        <div className="relative z-20 h-full flex flex-col justify-end pb-24 px-8 md:px-20 max-w-screen-2xl mx-auto w-full">
-          <div className="space-y-6 max-w-xl animate-in fade-in slide-in-from-bottom-6 duration-1000">
+        <div className="relative z-20 h-full flex flex-col justify-end pb-32 px-8 md:px-20 max-w-screen-2xl mx-auto w-full">
+          <div className="space-y-8 max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000">
             <div className="flex items-center gap-3">
-              <span className="bg-primary px-2 py-0.5 rounded-sm text-white font-black tracking-widest text-[9px] uppercase shadow-lg shadow-primary/20">
-                Original
-              </span>
-              <span className="text-white/40 font-bold tracking-widest text-[9px] uppercase">
-                Season 1 Now Streaming
+              <span className="bg-primary px-3 py-1 rounded-sm text-white font-black tracking-widest text-[10px] uppercase shadow-[0_0_15px_rgba(229,9,20,0.5)]">
+                StreamVerse Original
               </span>
             </div>
             
             <div className="relative">
-              {/* Atmospheric Glow behind Title */}
-              <div className="absolute -inset-x-20 -inset-y-10 bg-primary/5 blur-[100px] rounded-full z-0 pointer-events-none" />
-              <h1 className="relative z-10 text-3xl md:text-4xl font-black text-white leading-[1.1] tracking-tighter uppercase">
+              <div className="absolute -inset-x-20 -inset-y-10 bg-primary/10 blur-[120px] rounded-full z-0 pointer-events-none" />
+              <h1 className="relative z-10 text-5xl md:text-7xl font-black text-white leading-[0.95] tracking-tighter uppercase italic">
                 CHRONO <br /> <span className="text-primary">ECHOES</span>
               </h1>
             </div>
             
-            <p className="text-xs md:text-sm text-zinc-400 leading-relaxed max-w-lg font-medium">
+            <p className="text-sm md:text-lg text-zinc-200 leading-snug max-w-xl font-bold drop-shadow-xl">
               A daring scientist uncovers the price of altering history when she begins receiving warnings from her future self.
             </p>
             
-            <div className="flex flex-wrap gap-3 pt-2">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white h-10 px-8 text-xs font-bold rounded-md flex items-center gap-2 transition-all active:scale-95 shadow-xl shadow-primary/10">
-                <Play className="fill-current w-4 h-4" /> Play
+            <div className="flex flex-wrap gap-4 pt-4">
+              <Button size="lg" className="bg-white hover:bg-zinc-200 text-black h-14 px-10 text-sm font-black rounded-sm flex items-center gap-3 transition-all active:scale-95">
+                <Play className="fill-current w-6 h-6" /> Play
               </Button>
-              <Button size="lg" variant="secondary" className="bg-white/5 hover:bg-white/10 backdrop-blur-md text-white border border-white/5 h-10 px-8 text-xs font-bold rounded-md flex items-center gap-2 transition-all active:scale-95">
-                <Info className="w-4 h-4" /> More Info
+              <Button size="lg" variant="secondary" className="bg-zinc-500/30 hover:bg-zinc-500/50 backdrop-blur-sm text-white border-none h-14 px-10 text-sm font-black rounded-sm flex items-center gap-3 transition-all active:scale-95">
+                <Info className="w-6 h-6" /> More Info
               </Button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Main Content - Perfect horizontal alignment */}
-      <main className="relative z-10 flex-grow bg-transparent -mt-20">
-        <div className="space-y-20 pb-32">
+      {/* Main Content - High Contrast Rows */}
+      <main className="relative z-10 flex-grow bg-black">
+        <div className="space-y-24 pb-48">
           {continueWatching.length > 0 && (
             <div className="animate-in fade-in duration-1000">
               <MovieRow title="Continue Watching" movies={continueWatching} />
             </div>
           )}
 
-          <div className="space-y-20">
+          <div className="space-y-24">
             {CATEGORIES.map((category) => (
               <div key={category.name}>
                 <MovieRow title={category.name} movies={category.items} />
@@ -114,44 +110,44 @@ export default function HomePage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-black/10 backdrop-blur-sm border-t border-white/5 py-24 px-8 md:px-20 text-zinc-600 text-[10px] font-medium">
+      <footer className="bg-black border-t border-white/5 py-32 px-8 md:px-20 text-zinc-500 text-[11px] font-bold">
         <div className="max-w-screen-2xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-16 mb-20">
-            <div className="space-y-6">
-              <div className="flex items-center gap-2 text-primary/80">
-                <Clapperboard className="w-7 h-7" />
-                <span className="text-xl font-black uppercase tracking-tighter">StreamVerse</span>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-16 mb-24">
+            <div className="space-y-8">
+              <div className="flex items-center gap-2 text-primary">
+                <Clapperboard className="w-8 h-8" />
+                <span className="text-2xl font-black uppercase tracking-tighter">StreamVerse</span>
               </div>
-              <p className="text-[10px] leading-relaxed text-zinc-700 max-w-[180px]">
+              <p className="text-[11px] leading-relaxed text-zinc-600 max-w-[200px]">
                 Cinematic masterpieces curated for the true enthusiast. Experience storytelling like never before.
               </p>
-              <div className="flex gap-6">
-                <Facebook className="w-4 h-4 hover:text-white cursor-pointer transition-colors" />
-                <Instagram className="w-4 h-4 hover:text-white cursor-pointer transition-colors" />
-                <Twitter className="w-4 h-4 hover:text-white cursor-pointer transition-colors" />
+              <div className="flex gap-8">
+                <Facebook className="w-5 h-5 hover:text-white cursor-pointer transition-colors" />
+                <Instagram className="w-5 h-5 hover:text-white cursor-pointer transition-colors" />
+                <Twitter className="w-5 h-5 hover:text-white cursor-pointer transition-colors" />
               </div>
             </div>
-            <div className="space-y-5">
-              <h4 className="text-zinc-400 font-bold text-[9px] uppercase tracking-widest">Explore</h4>
-              <ul className="space-y-2.5">
+            <div className="space-y-6">
+              <h4 className="text-zinc-400 font-black text-[10px] uppercase tracking-[0.2em]">Explore</h4>
+              <ul className="space-y-3">
                 <li className="hover:text-white cursor-pointer transition-colors">TV Shows</li>
                 <li className="hover:text-white cursor-pointer transition-colors">Movies</li>
                 <li className="hover:text-white cursor-pointer transition-colors">Originals</li>
                 <li className="hover:text-white cursor-pointer transition-colors">Trending</li>
               </ul>
             </div>
-            <div className="space-y-5">
-              <h4 className="text-zinc-400 font-bold text-[9px] uppercase tracking-widest">Support</h4>
-              <ul className="space-y-2.5">
+            <div className="space-y-6">
+              <h4 className="text-zinc-400 font-black text-[10px] uppercase tracking-[0.2em]">Support</h4>
+              <ul className="space-y-3">
                 <li className="hover:text-white cursor-pointer transition-colors">Help Center</li>
                 <li className="hover:text-white cursor-pointer transition-colors">Account</li>
                 <li className="hover:text-white cursor-pointer transition-colors">Privacy Policy</li>
                 <li className="hover:text-white cursor-pointer transition-colors">Contact Us</li>
               </ul>
             </div>
-            <div className="space-y-5">
-              <h4 className="text-zinc-400 font-bold text-[9px] uppercase tracking-widest">Company</h4>
-              <ul className="space-y-2.5">
+            <div className="space-y-6">
+              <h4 className="text-zinc-400 font-black text-[10px] uppercase tracking-[0.2em]">Company</h4>
+              <ul className="space-y-3">
                 <li className="hover:text-white cursor-pointer transition-colors">Ways to Watch</li>
                 <li className="hover:text-white cursor-pointer transition-colors">Corporate Info</li>
                 <li className="hover:text-white cursor-pointer transition-colors">Investor Relations</li>
@@ -159,11 +155,11 @@ export default function HomePage() {
               </ul>
             </div>
           </div>
-          <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-            <p className="text-[9px] text-zinc-800 uppercase tracking-[0.2em]">© 2025 StreamVerse Entertainment Global.</p>
-            <div className="flex gap-10 text-[9px] text-zinc-800 uppercase tracking-[0.2em]">
+          <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
+            <p className="text-[10px] text-zinc-700 uppercase tracking-[0.2em]">© 2025 StreamVerse Entertainment Global.</p>
+            <div className="flex gap-12 text-[10px] text-zinc-700 uppercase tracking-[0.2em]">
               <span className="hover:text-white cursor-pointer transition-colors">Ad Choices</span>
-              <span className="hover:text-white cursor-pointer transition-colors">Cookie Preferences</span>
+              <span className="hover:text-white cursor-pointer transition-colors">Cookies</span>
               <span className="hover:text-white cursor-pointer transition-colors">Legal Notices</span>
             </div>
           </div>

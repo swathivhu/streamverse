@@ -71,20 +71,20 @@ export default function Navbar() {
       className={cn(
         "fixed top-0 z-50 w-full transition-all duration-300 ease-in-out",
         isScrolled 
-          ? "bg-black/40 backdrop-blur-lg border-b border-white/5 py-3 shadow-md" 
-          : "bg-transparent py-6"
+          ? "bg-black border-b border-white/5 py-3 shadow-2xl" 
+          : "bg-gradient-to-b from-black/80 to-transparent py-6"
       )}
     >
       <div className="max-w-screen-2xl mx-auto px-8 md:px-20 flex items-center justify-between">
         <div className="flex items-center gap-10">
           <Link href="/home" className="flex items-center gap-2 group shrink-0">
-            <Clapperboard className="w-6 h-6 text-primary/90 transition-transform duration-300 group-hover:scale-105" />
-            <span className="text-lg font-bold text-white tracking-tighter hidden md:block uppercase">
+            <Clapperboard className="w-8 h-8 text-primary transition-transform duration-300 group-hover:scale-110" />
+            <span className="text-xl font-black text-primary tracking-tighter hidden md:block uppercase">
               StreamVerse
             </span>
           </Link>
           
-          <div className="hidden lg:flex items-center gap-8 text-[9px] font-semibold tracking-[0.15em] uppercase text-zinc-500">
+          <div className="hidden lg:flex items-center gap-8 text-[10px] font-bold tracking-[0.1em] uppercase">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -93,12 +93,12 @@ export default function Navbar() {
                   href={link.href} 
                   className={cn(
                     "transition-colors duration-200 hover:text-white relative py-1",
-                    isActive ? "text-white" : "text-zinc-500/60"
+                    isActive ? "text-white" : "text-zinc-400"
                   )}
                 >
                   {link.name}
                   {isActive && (
-                    <span className="absolute -bottom-1 left-0 w-full h-[1px] bg-primary/70" />
+                    <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-primary shadow-[0_0_10px_rgba(229,9,20,0.8)]" />
                   )}
                 </Link>
               );
@@ -108,49 +108,49 @@ export default function Navbar() {
         
         <div className="flex items-center gap-4 md:gap-6">
           <div className="hidden sm:flex items-center gap-5">
-            <Search className="w-4 h-4 text-zinc-500 cursor-pointer hover:text-white transition-colors" />
+            <Search className="w-5 h-5 text-zinc-400 cursor-pointer hover:text-white transition-colors" />
             <div className="relative cursor-pointer group">
-              <Bell className="w-4 h-4 text-zinc-500 group-hover:text-white transition-colors" />
-              <span className="absolute top-0 right-0 w-1 h-1 bg-primary/80 rounded-full" />
+              <Bell className="w-5 h-5 text-zinc-400 group-hover:text-white transition-colors" />
+              <span className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full border-2 border-black" />
             </div>
           </div>
 
-          <div className="hidden md:flex flex-col items-end shrink-0 border-r border-white/5 pr-4 mr-1">
-            <span className="text-[8px] text-zinc-600 font-bold uppercase tracking-[0.2em] mb-0.5">Welcome back</span>
-            <span className="text-[10px] font-bold text-zinc-300 tracking-wider uppercase">{userData?.username || 'User'}</span>
+          <div className="hidden md:flex flex-col items-end shrink-0 border-r border-white/10 pr-4 mr-1">
+            <span className="text-[9px] text-zinc-500 font-bold uppercase tracking-widest mb-0.5">Welcome back</span>
+            <span className="text-[11px] font-black text-white tracking-wider uppercase">{userData?.username || 'User'}</span>
           </div>
           
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-8 w-8 rounded-full p-0 overflow-hidden border border-white/5 hover:border-white/10 transition-all shadow-sm">
-                <Avatar className="h-full w-full">
+              <Button variant="ghost" className="relative h-9 w-9 rounded-md p-0 overflow-hidden border border-white/10 hover:border-white/30 transition-all shadow-xl">
+                <Avatar className="h-full w-full rounded-none">
                   <AvatarImage src={`https://picsum.photos/seed/${user?.uid || 'user'}/200/200`} alt="Profile" className="object-cover" />
-                  <AvatarFallback className="bg-zinc-950 text-[9px] font-bold text-zinc-500">
+                  <AvatarFallback className="bg-zinc-900 text-xs font-bold text-zinc-400">
                     {userData?.username?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || 'S'}
                   </AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-48 bg-zinc-950/95 backdrop-blur-xl border-white/5 shadow-2xl p-1" align="end" sideOffset={10}>
+            <DropdownMenuContent className="w-56 bg-[#141414] border-white/10 shadow-2xl p-2" align="end" sideOffset={12}>
               <DropdownMenuLabel className="font-normal p-3">
                 <div className="flex flex-col space-y-1">
-                  <p className="text-[10px] font-bold text-white uppercase">{userData?.username || 'Member'}</p>
-                  <p className="text-[8px] text-zinc-600 uppercase tracking-widest font-semibold">Premium</p>
+                  <p className="text-xs font-black text-white uppercase">{userData?.username || 'Member'}</p>
+                  <p className="text-[9px] text-zinc-500 uppercase tracking-widest font-bold">Premium Subscriber</p>
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator className="bg-white/5 mx-1" />
-              <DropdownMenuItem className="text-zinc-500 focus:text-white focus:bg-white/5 cursor-pointer py-2 px-3 rounded-md text-[9px] font-bold uppercase tracking-wider">
-                <User className="mr-2 h-3.5 w-3.5" /> Account
+              <DropdownMenuItem className="text-zinc-300 focus:text-white focus:bg-white/5 cursor-pointer py-3 px-3 rounded-md text-[10px] font-bold uppercase tracking-widest">
+                <User className="mr-2 h-4 w-4 text-zinc-500" /> Account
               </DropdownMenuItem>
-              <DropdownMenuItem className="text-zinc-500 focus:text-white focus:bg-white/5 cursor-pointer py-2 px-3 rounded-md text-[9px] font-bold uppercase tracking-wider">
-                <Settings className="mr-2 h-3.5 w-3.5" /> Settings
+              <DropdownMenuItem className="text-zinc-300 focus:text-white focus:bg-white/5 cursor-pointer py-3 px-3 rounded-md text-[10px] font-bold uppercase tracking-widest">
+                <Settings className="mr-2 h-4 w-4 text-zinc-500" /> Settings
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-white/5 mx-1" />
               <DropdownMenuItem 
                 onClick={handleLogout}
-                className="text-primary/70 hover:text-primary hover:bg-primary/5 cursor-pointer py-2 px-3 rounded-md text-[9px] font-bold uppercase tracking-wider"
+                className="text-primary hover:text-primary hover:bg-primary/5 cursor-pointer py-3 px-3 rounded-md text-[10px] font-bold uppercase tracking-widest"
               >
-                <LogOut className="mr-2 h-3.5 w-3.5" /> Sign Out
+                <LogOut className="mr-2 h-4 w-4" /> Sign Out
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
