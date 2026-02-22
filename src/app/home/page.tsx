@@ -2,11 +2,12 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import Navbar from '@/components/navbar';
 import MovieRow from '@/components/movie-row';
 import TrailerGenerator from '@/components/trailer-generator';
 import { CATEGORIES } from '@/lib/mock-data';
-import { Play, Info, Plus } from 'lucide-react';
+import { Play, Info, Clapperboard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useUser } from '@/firebase';
 
@@ -39,10 +40,13 @@ export default function HomePage() {
       
       {/* Hero Banner */}
       <div className="relative h-[85vh] w-full overflow-hidden">
-        <img 
+        <Image 
           src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&q=80" 
           alt="Hero Banner" 
-          className="absolute inset-0 w-full h-full object-cover"
+          fill
+          priority
+          className="object-cover"
+          data-ai-hint="cinema movie"
         />
         <div className="absolute inset-0 hero-gradient" />
         
