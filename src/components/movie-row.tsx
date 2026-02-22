@@ -34,6 +34,7 @@ export default function MovieRow({ title, movies }: MovieRowProps) {
       </h2>
       
       <div className="relative overflow-visible group/row">
+        {/* Scroll Buttons */}
         <button 
           onClick={() => scroll('left')}
           className={cn(
@@ -46,12 +47,12 @@ export default function MovieRow({ title, movies }: MovieRowProps) {
 
         <div 
           ref={rowRef}
-          className="flex gap-2 md:gap-4 overflow-x-auto px-4 md:px-12 hide-scrollbar scroll-smooth py-6"
+          className="flex gap-2 md:gap-4 overflow-x-auto px-4 md:px-12 hide-scrollbar scroll-smooth py-12 -my-12 snap-x snap-mandatory"
         >
           {movies.map((movie) => (
             <div 
               key={movie.id} 
-              className="flex-none w-[160px] md:w-[260px] aspect-[16/9] relative rounded-md overflow-visible group/item cursor-pointer transform transition-all duration-300 hover:scale-110 hover:z-50"
+              className="flex-none w-[160px] md:w-[260px] aspect-[16/9] relative rounded-md overflow-visible group/item cursor-pointer transform transition-all duration-300 hover:scale-110 hover:z-50 snap-start"
             >
               <div className="w-full h-full rounded-md overflow-hidden bg-zinc-900 shadow-xl border border-white/5">
                 <img 
@@ -62,7 +63,7 @@ export default function MovieRow({ title, movies }: MovieRowProps) {
               </div>
               
               {/* Detailed Card Overlay on Hover */}
-              <div className="absolute top-0 left-0 w-full h-full bg-zinc-900 opacity-0 group-hover/item:opacity-100 transition-all duration-300 rounded-md shadow-[0_0_30px_rgba(0,0,0,0.8)] scale-110 flex flex-col pointer-events-none group-hover/item:pointer-events-auto z-50">
+              <div className="absolute top-0 left-0 w-full h-full bg-zinc-950 opacity-0 group-hover/item:opacity-100 transition-all duration-300 rounded-md shadow-[0_0_30px_rgba(0,0,0,0.8)] flex flex-col pointer-events-none group-hover/item:pointer-events-auto z-50 overflow-hidden">
                 <img 
                   src={movie.thumbnail} 
                   alt={movie.title} 
@@ -71,25 +72,25 @@ export default function MovieRow({ title, movies }: MovieRowProps) {
                 <div className="p-4 space-y-3">
                   <div className="flex items-center justify-between">
                     <div className="flex gap-2">
-                      <button className="w-9 h-9 bg-white rounded-full flex items-center justify-center text-black hover:bg-zinc-200 transition-all active:scale-90">
-                        <Play className="w-5 h-5 fill-current" />
+                      <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black hover:bg-zinc-200 transition-all active:scale-90 pointer-events-auto">
+                        <Play className="w-4 h-4 fill-current" />
                       </button>
-                      <button className="w-9 h-9 border-2 border-zinc-600 rounded-full flex items-center justify-center text-white hover:border-white transition-all active:scale-90">
-                        <Plus className="w-5 h-5" />
+                      <button className="w-8 h-8 border-2 border-zinc-600 rounded-full flex items-center justify-center text-white hover:border-white transition-all active:scale-90 pointer-events-auto">
+                        <Plus className="w-4 h-4" />
                       </button>
                     </div>
-                    <button className="w-9 h-9 border-2 border-zinc-600 rounded-full flex items-center justify-center text-white hover:border-white transition-all active:scale-90 ml-auto">
-                      <Info className="w-5 h-5" />
+                    <button className="w-8 h-8 border-2 border-zinc-600 rounded-full flex items-center justify-center text-white hover:border-white transition-all active:scale-90 pointer-events-auto">
+                      <Info className="w-4 h-4" />
                     </button>
                   </div>
                   <div className="space-y-1">
-                    <p className="text-white font-bold text-sm truncate">{movie.title}</p>
-                    <div className="flex items-center gap-2 text-[10px] font-bold">
+                    <p className="text-white font-bold text-xs truncate">{movie.title}</p>
+                    <div className="flex items-center gap-2 text-[8px] font-bold">
                       <span className="text-green-500">98% Match</span>
                       <span className="border border-zinc-600 px-1 text-zinc-400">16+</span>
                       <span className="text-zinc-400">2h 14m</span>
                     </div>
-                    <p className="text-zinc-400 text-[10px] uppercase tracking-wider font-semibold">{movie.genre}</p>
+                    <p className="text-zinc-400 text-[8px] uppercase tracking-wider font-semibold">{movie.genre}</p>
                   </div>
                 </div>
               </div>

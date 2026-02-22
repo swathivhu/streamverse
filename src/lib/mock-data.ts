@@ -6,16 +6,16 @@ export interface Movie {
 }
 
 export const MOVIES: Movie[] = [
-  { id: '1', title: 'The Dark Night', genre: 'Action', thumbnail: 'https://picsum.photos/seed/10/400/600' },
-  { id: '2', title: 'Interstellar Journey', genre: 'Sci-Fi', thumbnail: 'https://picsum.photos/seed/11/400/600' },
-  { id: '3', title: 'Midnight Mystery', genre: 'Thriller', thumbnail: 'https://picsum.photos/seed/12/400/600' },
-  { id: '4', title: 'Summer of 69', genre: 'Drama', thumbnail: 'https://picsum.photos/seed/13/400/600' },
-  { id: '5', title: 'Space Cowboys', genre: 'Adventure', thumbnail: 'https://picsum.photos/seed/14/400/600' },
-  { id: '6', title: 'Robot Dreams', genre: 'Sci-Fi', thumbnail: 'https://picsum.photos/seed/15/400/600' },
-  { id: '7', title: 'Ocean Deep', genre: 'Documentary', thumbnail: 'https://picsum.photos/seed/16/400/600' },
-  { id: '8', title: 'Lost in Time', genre: 'Fantasy', thumbnail: 'https://picsum.photos/seed/17/400/600' },
-  { id: '9', title: 'Red Mars', genre: 'Sci-Fi', thumbnail: 'https://picsum.photos/seed/18/400/600' },
-  { id: '10', title: 'Quiet Storm', genre: 'Romance', thumbnail: 'https://picsum.photos/seed/19/400/600' },
+  { id: '1', title: 'The Dark Night', genre: 'Action', thumbnail: 'https://picsum.photos/seed/10/640/360' },
+  { id: '2', title: 'Interstellar Journey', genre: 'Sci-Fi', thumbnail: 'https://picsum.photos/seed/11/640/360' },
+  { id: '3', title: 'Midnight Mystery', genre: 'Thriller', thumbnail: 'https://picsum.photos/seed/12/640/360' },
+  { id: '4', title: 'Summer of 69', genre: 'Drama', thumbnail: 'https://picsum.photos/seed/13/640/360' },
+  { id: '5', title: 'Space Cowboys', genre: 'Adventure', thumbnail: 'https://picsum.photos/seed/14/640/360' },
+  { id: '6', title: 'Robot Dreams', genre: 'Sci-Fi', thumbnail: 'https://picsum.photos/seed/15/640/360' },
+  { id: '7', title: 'Ocean Deep', genre: 'Documentary', thumbnail: 'https://picsum.photos/seed/16/640/360' },
+  { id: '8', title: 'Lost in Time', genre: 'Fantasy', thumbnail: 'https://picsum.photos/seed/17/640/360' },
+  { id: '9', title: 'Red Mars', genre: 'Sci-Fi', thumbnail: 'https://picsum.photos/seed/18/640/360' },
+  { id: '10', title: 'Quiet Storm', genre: 'Romance', thumbnail: 'https://picsum.photos/seed/19/640/360' },
 ];
 
 export const CATEGORIES = [
