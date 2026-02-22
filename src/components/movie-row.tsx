@@ -24,11 +24,11 @@ export default function MovieRow({ title, movies }: MovieRowProps) {
 
   return (
     <div 
-      className="space-y-4 py-6 group relative"
+      className="space-y-6 py-8 group relative"
       onMouseEnter={() => setShowArrows(true)}
       onMouseLeave={() => setShowArrows(false)}
     >
-      <h2 className="text-xl md:text-2xl font-bold px-6 md:px-12 text-zinc-200 transition-colors hover:text-white cursor-pointer inline-flex items-center gap-2">
+      <h2 className="text-xl md:text-2xl font-black px-6 md:px-12 text-zinc-100 tracking-tight transition-colors hover:text-white cursor-pointer inline-flex items-center gap-2 uppercase italic">
         {title}
         <ChevronRight className="w-5 h-5 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
       </h2>
@@ -49,7 +49,7 @@ export default function MovieRow({ title, movies }: MovieRowProps) {
         {/* Scrollable Container */}
         <div 
           ref={rowRef}
-          className="flex gap-3 md:gap-4 overflow-x-auto px-6 md:px-12 hide-scrollbar scroll-smooth snap-x snap-mandatory py-8 -my-8"
+          className="flex gap-3 md:gap-4 overflow-x-auto px-6 md:px-12 hide-scrollbar scroll-smooth snap-x snap-mandatory py-10 -my-10"
         >
           {movies.map((movie) => (
             <div 
@@ -74,15 +74,15 @@ export default function MovieRow({ title, movies }: MovieRowProps) {
                 </div>
               )}
               
-              {/* Glassmorphism Title Overlay on Hover */}
+              {/* Minimal Title Overlay on Hover */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent backdrop-blur-[2px] opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 z-20 border border-white/5 rounded-md">
                 <div className="flex flex-col gap-1 translate-y-2 group-hover/item:translate-y-0 transition-transform duration-300">
-                  <h3 className="text-white font-bold text-sm md:text-base line-clamp-1 drop-shadow-lg uppercase tracking-tight">
+                  <h3 className="text-white font-black text-xs md:text-sm line-clamp-1 drop-shadow-lg uppercase tracking-tight italic">
                     {movie.title}
                   </h3>
-                  <div className="flex items-center gap-2 text-[10px] md:text-xs font-semibold text-green-500">
-                    <span className="bg-green-500/10 px-1.5 py-0.5 rounded border border-green-500/20">98% Match</span>
-                    <span className="text-zinc-400">|</span>
+                  <div className="flex items-center gap-2 text-[8px] md:text-[10px] font-black text-green-500 uppercase tracking-widest">
+                    <span>98% Match</span>
+                    <span className="text-zinc-500">•</span>
                     <span className="text-zinc-300">{movie.genre}</span>
                   </div>
                 </div>
