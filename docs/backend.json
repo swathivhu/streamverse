@@ -1,0 +1,73 @@
+{
+  "entities": {
+    "UserProfile": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "UserProfile",
+      "type": "object",
+      "description": "Stores additional user-specific information for the StreamVerse application, managed in Firestore and linked to Firebase Authentication.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the UserProfile entity. This must correspond to the Firebase Authentication User ID (uid) to link to the authenticated user. (Primary Key)"
+        },
+        "username": {
+          "type": "string",
+          "description": "The user's chosen display name or username for the StreamVerse application."
+        },
+        "email": {
+          "type": "string",
+          "description": "The user's primary email address. This is also used by Firebase Authentication for login.",
+          "format": "email"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "The user's phone number, typically used for contact or recovery purposes. (Format: 10 digits)"
+        },
+        "registrationDate": {
+          "type": "string",
+          "description": "Timestamp indicating when the user account was registered in the application.",
+          "format": "date-time"
+        },
+        "lastLoginDate": {
+          "type": "string",
+          "description": "Timestamp indicating the user's last successful login to the application.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "username",
+        "email",
+        "phoneNumber",
+        "registrationDate"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "UserProfile",
+          "schema": {
+            "$ref": "#/backend/entities/UserProfile"
+          },
+          "description": "Stores additional user profile information for the StreamVerse application. Each document's ID corresponds directly to the Firebase Authentication User ID (uid) of the owning user. This structure ensures explicit, path-based ownership, making security rules simple and efficient. It includes essential user details like username, email, and phone number, alongside registration and last login timestamps.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user, matching the Firebase Authentication UID. This serves as the document ID."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The recommended Firestore structure for the StreamVerse application prioritizes security, scalability, and debuggability, primarily focusing on the `UserProfile` entity. The core of the design is the use of a top-level collection `/users`, where each document's ID is explicitly set to match the Firebase Authentication User ID (UID) of the owning user. This approach directly implements several critical design principles:\n\n1.  **Authorization Independence (CRITICAL):** By setting the document ID to `request.auth.uid` (e.g., `/users/{userId}` where `{userId}` is the user's UID), we achieve absolute authorization independence. Firestore Security Rules can then simply compare `request.auth.uid` with the `{userId}` wildcard in the path. This eliminates the need for expensive, non-atomic `get()` operations within rules to fetch parent data or check ownership, thereby enhancing performance, reducing complexity, and preventing potential deadlocks or race conditions during atomic writes (transactions/batches).\n\n2.  **QAPs (Rules are not Filters):** This structure inherently supports secure query access patterns. For `get` operations, a user can directly query for their own profile using `get('/users/' + request.auth.uid)`. The security rule `allow read: if request.auth.uid == userId;` ensures that only the authenticated owner can retrieve their specific profile, preventing clients from inadvertently requesting other users' data. For `list` operations, the owner-only read rule naturally prevents unauthorized users from listing arbitrary user profiles, thus ensuring that rules are not used as implicit filters over large datasets, which is crucial for performance and security.\n\n3.  **Structural Segregation & Access Modeling:** All documents within the `/users` collection share a uniform security posture: private, owner-only access. This radical consistency simplifies security rules dramatically, as there's no mixing of data with different access requirements within the same collection. The path-based ownership model (`/users/{userId}`) is the most secure and straightforward pattern for user-owned private data, directly linking the authenticated user to their profile document.\n\n4.  **DBAC (No Custom Claims) & Data Clarity:** The design adheres to Database-backed Access Control by relying solely on `request.auth.uid` for authorization; no custom claims are needed. The `UserProfile` entity in Firestore stores only non-sensitive, additional user details (username, email, phone number, timestamps). Password management is strictly handled by Firebase Authentication, as mandated, ensuring no plaintext or hashed passwords are ever stored in Firestore. The `id` field within the `UserProfile` document itself is redundant with the document ID but serves as an explicit internal reference, further enhancing data clarity.\n\nThis structure provides a robust, highly secure, and easily auditable foundation for user data in the StreamVerse application, aligning perfectly with all core design principles and mandates."
+  }
+}

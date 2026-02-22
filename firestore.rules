@@ -1,0 +1,86 @@
+rules_version = '2';
+
+/**
+ * STREAMVERSE FIRESTORE SECURITY RULES
+ * 
+ * Core Philosophy:
+ * This ruleset implements a strict "Owner-Only" access model. The security architecture 
+ * is built on the principle of Authorization Independence, where a user's identity 
+ * is cryptographically verified by Firebase Authentication and mapped directly to 
+ * their data via document IDs.
+ * 
+ * Data Structure:
+ * All user-specific metadata is stored in a top-level `/users` collection.
+ * The document ID (e.g., `/users/{userId}`) MUST exactly match the Firebase 
+ * Authentication UID of the user.
+ * 
+ * Key Security Decisions:
+ * 1. Path-Based Ownership: By mirroring the Auth UID in the document path, we 
+ *    eliminate the need for costly cross-document lookups (get() calls) for authorization.
+ * 2. Private by Default: User profiles are private. Users can only read and write 
+ *    their own profile information. Listing the entire /users collection is restricted 
+ *    to prevent data scraping or user enumeration.
+ * 3. Relational Integrity: The rules enforce that the internal 'id' field within 
+ *    the UserProfile document remains consistent with the authenticated user's UID.
+ * 4. Prototyping Flexibility: While authorization is strictly enforced, the 
+ *    internal schema (attributes like 'username' or 'phoneNumber') is kept 
+ *    flexible to allow for rapid frontend iteration without rule updates.
+ * 
+ * Denormalization for Authorization:
+ * We rely on the `userId` in the path as the primary key for authorization. 
+ * This ensures that rules are performant and scales linearly with the number of users.
+ */
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /** 
+     * GLOBAL HELPER FUNCTIONS
+     */
+
+    // Checks if the request is made by a signed-in user.
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Checks if the authenticated user's UID matches the provided userId.
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Checks if the user is the owner and the document currently exists.
+    // Used for state-changing operations like update and delete.
+    function isExistingOwner(userId) {
+      return isOwner(userId) && resource != null;
+    }
+
+    /**
+     * @description Rules for the UserProfile entity. Ensures users can only manage their own profile data.
+     * @path /users/{userId}
+     * @allow (create) User 'user_123' creates a document at /users/user_123 where data.id == 'user_123'.
+     * @deny (create) User 'user_123' attempts to create a document at /users/user_456.
+     * @principle Restricts access to a user's own data tree and validates path-to-data consistency.
+     */
+    match /users/{userId} {
+      
+      // Allow a user to retrieve their own profile document.
+      allow get: if isOwner(userId);
+      
+      // Allow a user to list their own profile (useful for checking existence).
+      // Prevents public enumeration of all users in the system.
+      allow list: if isOwner(userId);
+
+      // Allow profile creation only if the user is the owner of the path.
+      // Enforces that the internal 'id' field matches the UID for relational integrity.
+      allow create: if isOwner(userId) && request.resource.data.id == userId;
+
+      // Allow updates only by the owner and only if the document exists.
+      // Enforces immutability of the 'id' field to prevent ownership hijacking.
+      allow update: if isExistingOwner(userId) && request.resource.data.id == resource.data.id;
+
+      // Allow deletion only by the owner of the profile.
+      allow delete: if isExistingOwner(userId);
+    }
+
+  }
+}
