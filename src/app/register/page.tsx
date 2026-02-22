@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-import { hashPassword } from '@/lib/crypto';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { useAuth, useFirestore } from '@/firebase';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -16,7 +16,6 @@ import { Clapperboard } from 'lucide-react';
 export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    userId: '',
     username: '',
     email: '',
     phone: '',
@@ -24,12 +23,14 @@ export default function RegisterPage() {
   });
   const router = useRouter();
   const { toast } = useToast();
+  const auth = useAuth();
+  const db = useFirestore();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    if (Object.values(formData).some(val => !val)) {
+    if (!formData.username || !formData.email || !formData.phone || !formData.password) {
       toast({ title: "Error", description: "All fields are mandatory.", variant: "destructive" });
       setLoading(false);
       return;
@@ -49,32 +50,29 @@ export default function RegisterPage() {
     }
 
     try {
-      const userDocRef = doc(db, "users", formData.username);
-      const userSnap = await getDoc(userDocRef);
+      // 1. Create user in Firebase Auth
+      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      const user = userCredential.user;
 
-      if (userSnap.exists()) {
-        toast({ title: "Error", description: "Username already taken.", variant: "destructive" });
-        setLoading(false);
-        return;
-      }
-
-      const hashedPassword = await hashPassword(formData.password);
-      
-      await setDoc(userDocRef, {
-        userId: formData.userId,
+      // 2. Store additional details in Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        id: user.uid,
         username: formData.username,
         email: formData.email,
-        phone: formData.phone,
-        password: hashedPassword,
-        viewingHistory: ['Interstellar Journey', 'The Dark Night', 'Robot Dreams'], // Initial history for AI demo
-        createdAt: new Date().toISOString(),
+        phoneNumber: formData.phone,
+        registrationDate: new Date().toISOString(),
+        viewingHistory: ['Interstellar Journey', 'The Dark Night', 'Robot Dreams'],
       });
 
-      toast({ title: "Success", description: "Registration successful! You can now log in." });
-      router.push('/login');
-    } catch (error) {
+      toast({ title: "Success", description: "Account created successfully!" });
+      router.push('/home');
+    } catch (error: any) {
       console.error(error);
-      toast({ title: "Error", description: "Something went wrong. Please try again.", variant: "destructive" });
+      let message = "Could not complete registration.";
+      if (error.code === 'auth/email-already-in-use') message = "Email already in use.";
+      if (error.code === 'auth/weak-password') message = "Password is too weak.";
+      
+      toast({ title: "Registration Failed", description: message, variant: "destructive" });
     } finally {
       setLoading(false);
     }
@@ -94,16 +92,6 @@ export default function RegisterPage() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleRegister} className="space-y-4">
-            <div className="space-y-2">
-              <Label className="text-white" htmlFor="userId">User ID</Label>
-              <Input 
-                id="userId" 
-                placeholder="Unique ID" 
-                className="bg-zinc-800 border-zinc-700 text-white"
-                value={formData.userId}
-                onChange={(e) => setFormData({...formData, userId: e.target.value})}
-              />
-            </div>
             <div className="space-y-2">
               <Label className="text-white" htmlFor="username">Username</Label>
               <Input 

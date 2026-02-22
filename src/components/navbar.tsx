@@ -3,12 +3,15 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Clapperboard, LogOut, Search, Bell, User } from 'lucide-react';
+import { Clapperboard, LogOut, Search, Bell } from 'lucide-react';
 import Link from 'next/link';
+import { signOut } from 'firebase/auth';
+import { useAuth } from '@/firebase';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const router = useRouter();
+  const auth = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,9 +21,13 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('streamverse_user');
-    router.push('/login');
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      router.push('/login');
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   return (

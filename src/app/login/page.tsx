@@ -3,9 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-import { hashPassword } from '@/lib/crypto';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useAuth } from '@/firebase';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -16,53 +15,34 @@ import { Clapperboard } from 'lucide-react';
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: '',
   });
   const router = useRouter();
   const { toast } = useToast();
+  const auth = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    if (!formData.username || !formData.password) {
-      toast({ title: "Error", description: "Username and password are required.", variant: "destructive" });
+    if (!formData.email || !formData.password) {
+      toast({ title: "Error", description: "Email and password are required.", variant: "destructive" });
       setLoading(false);
       return;
     }
 
     try {
-      const userDocRef = doc(db, "users", formData.username);
-      const userSnap = await getDoc(userDocRef);
-
-      if (!userSnap.exists()) {
-        toast({ title: "Error", description: "User not found.", variant: "destructive" });
-        setLoading(false);
-        return;
-      }
-
-      const userData = userSnap.data();
-      const inputHash = await hashPassword(formData.password);
-
-      if (inputHash === userData.password) {
-        toast({ title: "Login Successful", description: "Welcome back to StreamVerse!" });
-        
-        // Store session (simplified for scaffold)
-        localStorage.setItem('streamverse_user', JSON.stringify({
-          userId: userData.userId,
-          username: userData.username,
-          email: userData.email,
-          viewingHistory: userData.viewingHistory || []
-        }));
-
-        router.push('/home');
-      } else {
-        toast({ title: "Login Failed", description: "Invalid password.", variant: "destructive" });
-      }
-    } catch (error) {
+      await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      toast({ title: "Login Successful", description: "Welcome back to StreamVerse!" });
+      router.push('/home');
+    } catch (error: any) {
       console.error(error);
-      toast({ title: "Error", description: "Something went wrong.", variant: "destructive" });
+      let message = "Invalid email or password.";
+      if (error.code === 'auth/user-not-found') message = "No account found with this email.";
+      if (error.code === 'auth/wrong-password') message = "Incorrect password.";
+      
+      toast({ title: "Login Failed", description: message, variant: "destructive" });
     } finally {
       setLoading(false);
     }
@@ -83,13 +63,14 @@ export default function LoginPage() {
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-2">
-              <Label className="text-white" htmlFor="username">Username</Label>
+              <Label className="text-white" htmlFor="email">Email</Label>
               <Input 
-                id="username" 
-                placeholder="Enter your username" 
+                id="email" 
+                type="email"
+                placeholder="Enter your email" 
                 className="bg-zinc-800 border-zinc-700 text-white h-12"
-                value={formData.username}
-                onChange={(e) => setFormData({...formData, username: e.target.value})}
+                value={formData.email}
+                onChange={(e) => setFormData({...formData, email: e.target.value})}
               />
             </div>
             <div className="space-y-2">
@@ -107,7 +88,7 @@ export default function LoginPage() {
               {loading ? (
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  Checking...
+                  Signing in...
                 </div>
               ) : "Sign In"}
             </Button>

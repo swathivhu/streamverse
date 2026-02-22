@@ -3,23 +3,38 @@
 import { useState } from 'react';
 import { generatePersonalizedTrailer, PersonalizedTrailerGenerationOutput } from '@/ai/flows/personalized-trailer-generation';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Sparkles, PlayCircle, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useUser, useFirestore, useDoc, useMemoFirebase } from '@/firebase';
+import { doc } from 'firebase/firestore';
 
 export default function TrailerGenerator() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<PersonalizedTrailerGenerationOutput | null>(null);
   const { toast } = useToast();
+  const { user } = useUser();
+  const db = useFirestore();
+
+  const userRef = useMemoFirebase(() => {
+    if (!db || !user?.uid) return null;
+    return doc(db, 'users', user.uid);
+  }, [db, user?.uid]);
+
+  const { data: userData } = useDoc(userRef);
 
   const handleGenerate = async () => {
+    if (!user) {
+      toast({ title: "Auth required", description: "Please log in to generate trailers.", variant: "destructive" });
+      return;
+    }
+
     setLoading(true);
-    const user = JSON.parse(localStorage.getItem('streamverse_user') || '{}');
     
     try {
       const output = await generatePersonalizedTrailer({
-        userId: user.userId || 'guest',
-        viewingHistory: user.viewingHistory || []
+        userId: user.uid,
+        viewingHistory: userData?.viewingHistory || []
       });
       setResult(output);
     } catch (error) {
