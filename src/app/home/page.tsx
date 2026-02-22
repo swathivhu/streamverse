@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Navbar from '@/components/navbar';
 import MovieRow from '@/components/movie-row';
 import TrailerGenerator from '@/components/trailer-generator';
-import { CATEGORIES, MOVIES } from '@/lib/mock-data';
+import { CATEGORIES, CONTINUE_WATCHING } from '@/lib/mock-data';
 import { Play, Info, Clapperboard, Facebook, Instagram, Twitter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useUser } from '@/firebase';
@@ -34,13 +34,11 @@ export default function HomePage() {
 
   if (!user) return null;
 
-  const continueWatching = MOVIES.filter(movie => movie.progress !== undefined).slice(0, 3);
-
   return (
     <div className="min-h-screen bg-black flex flex-col overflow-x-hidden">
       <Navbar />
       
-      {/* Hero Section - Balanced Vertical Presence */}
+      {/* Hero Section */}
       <section className="relative h-[85vh] w-full flex-shrink-0 overflow-hidden pt-20">
         <div className="absolute inset-0 z-0">
           <Image 
@@ -75,10 +73,10 @@ export default function HomePage() {
             </p>
             
             <div className="flex flex-wrap gap-4 pt-4">
-              <Button size="lg" className="bg-[#E50914] hover:bg-[#ff0a16] text-white h-14 px-10 text-sm font-black rounded-sm flex items-center gap-3 transition-all active:scale-95 border-none shadow-lg">
+              <Button size="lg" className="bg-[#E50914] hover:bg-[#ff0a16] text-white h-14 px-10 text-sm font-bold rounded-sm flex items-center gap-3 transition-all active:scale-95 border-none shadow-lg">
                 <Play className="fill-current w-6 h-6" /> Play
               </Button>
-              <Button size="lg" variant="secondary" className="bg-zinc-500/30 hover:bg-zinc-500/50 backdrop-blur-sm text-white border-none h-14 px-10 text-sm font-black rounded-sm flex items-center gap-3 transition-all active:scale-95">
+              <Button size="lg" variant="secondary" className="bg-zinc-500/30 hover:bg-zinc-500/50 backdrop-blur-sm text-white border-none h-14 px-10 text-sm font-bold rounded-sm flex items-center gap-3 transition-all active:scale-95">
                 <Info className="w-6 h-6" /> More Info
               </Button>
             </div>
@@ -86,12 +84,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Main Content - High Contrast Rows */}
+      {/* Main Content */}
       <main className="relative z-10 flex-grow bg-black">
         <div className="space-y-24 pb-48">
-          {continueWatching.length > 0 && (
+          {CONTINUE_WATCHING.length > 0 && (
             <div className="animate-in fade-in duration-1000 mt-12">
-              <MovieRow title="Continue Watching" movies={continueWatching} />
+              <MovieRow title="Continue Watching" movies={CONTINUE_WATCHING} />
             </div>
           )}
 

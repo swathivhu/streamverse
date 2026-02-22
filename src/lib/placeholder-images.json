@@ -1,3 +1,202 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "m1",
+      "description": "Cinematic Action 1",
+      "imageUrl": "https://images.unsplash.com/photo-1575919220112-0d5a2dc6a4b6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhY3Rpb24lMjBtb3ZpZXxlbnwwfHx8fDE3NzE3NTUwNDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "action movie"
+    },
+    {
+      "id": "m2",
+      "description": "Cinematic Action 2",
+      "imageUrl": "https://images.unsplash.com/photo-1514908866475-59af9c4069bb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZXhwbG9zaW9uJTIwZmlyZXxlbnwwfHx8fDE3NzE3ODYzMjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "explosion fire"
+    },
+    {
+      "id": "m3",
+      "description": "Cinematic Action 3",
+      "imageUrl": "https://images.unsplash.com/photo-1589240508375-8ad32cfcfcf4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxmYXN0JTIwY2FyfGVufDB8fHx8MTc3MTc4NjMyNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "fast car"
+    },
+    {
+      "id": "m4",
+      "description": "Cinematic Action 4",
+      "imageUrl": "https://images.unsplash.com/photo-1629036430679-59b47e7e4aec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxoZXJvJTIwc2lsaG91ZXR0ZXxlbnwwfHx8fDE3NzE3ODYzMjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hero silhouette"
+    },
+    {
+      "id": "m5",
+      "description": "Cinematic Action 5",
+      "imageUrl": "https://images.unsplash.com/photo-1531819177115-428566ccfb50?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjaXR5JTIwc2t5bGluZSUyMG5pZ2h0fGVufDB8fHx8MTc3MTY3MDY1NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "city skyline night"
+    },
+    {
+      "id": "m6",
+      "description": "Sci-Fi 1",
+      "imageUrl": "https://images.unsplash.com/photo-1681708765556-b58f95e74cbc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxzcGFjZXNoaXAlMjBnYWxheHl8ZW58MHx8fHwxNzcxNzg2MzI2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "spaceship galaxy"
+    },
+    {
+      "id": "m7",
+      "description": "Sci-Fi 2",
+      "imageUrl": "https://images.unsplash.com/photo-1686386084459-8d9d14400a4b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxyb2JvdCUyMGN5Ym9yZ3xlbnwwfHx8fDE3NzE3ODYzMjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "robot cyborg"
+    },
+    {
+      "id": "m8",
+      "description": "Sci-Fi 3",
+      "imageUrl": "https://images.unsplash.com/photo-1561344640-2453889cde5b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxuZW9uJTIwY2l0eXxlbnwwfHx8fDE3NzE3NTcwMTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "neon city"
+    },
+    {
+      "id": "m9",
+      "description": "Sci-Fi 4",
+      "imageUrl": "https://images.unsplash.com/photo-1683217617813-9c77d57028f3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhbGllbiUyMHBsYW5ldHxlbnwwfHx8fDE3NzE2NzI0NzR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "alien planet"
+    },
+    {
+      "id": "m10",
+      "description": "Sci-Fi 5",
+      "imageUrl": "https://images.unsplash.com/photo-1739561439496-f2d1be7503d8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxob2xvZ3JhbSUyMHRlY2hub2xvZ3l8ZW58MHx8fHwxNzcxNzg2MzI2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hologram technology"
+    },
+    {
+      "id": "m11",
+      "description": "Drama 1",
+      "imageUrl": "https://images.unsplash.com/photo-1611738740585-3598e06e0f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxyYWlueSUyMHdpbmRvd3xlbnwwfHx8fDE3NzE3MDI5NDZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "rainy window"
+    },
+    {
+      "id": "m12",
+      "description": "Drama 2",
+      "imageUrl": "https://images.unsplash.com/photo-1760170437237-a3654545ab4c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxlbXB0eSUyMHRoZWF0ZXJ8ZW58MHx8fHwxNzcxNzg2MzI2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "empty theater"
+    },
+    {
+      "id": "m13",
+      "description": "Drama 3",
+      "imageUrl": "https://images.unsplash.com/photo-1548323056-c9bf57ed0df0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxsb25lbHklMjByb2FkfGVufDB8fHx8MTc3MTc2NjAxMHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "lonely road"
+    },
+    {
+      "id": "m14",
+      "description": "Drama 4",
+      "imageUrl": "https://images.unsplash.com/photo-1659598086235-6de75cb9e043?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxwb3J0cmFpdCUyMGVtb3Rpb258ZW58MHx8fHwxNzcxNzg2MzI2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "portrait emotion"
+    },
+    {
+      "id": "m15",
+      "description": "Drama 5",
+      "imageUrl": "https://images.unsplash.com/photo-1561571994-3c61c554181a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxzdW5zZXQlMjBiZWFjaHxlbnwwfHx8fDE3NzE3MTA1MzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "sunset beach"
+    },
+    {
+      "id": "m16",
+      "description": "Trending 1",
+      "imageUrl": "https://images.unsplash.com/photo-1522158637959-30385a09e0da?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjcm93ZCUyMGNvbmNlcnR8ZW58MHx8fHwxNzcxNzg2MzI2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "crowd concert"
+    },
+    {
+      "id": "m17",
+      "description": "Trending 2",
+      "imageUrl": "https://images.unsplash.com/photo-1546349851-64285be8e9fa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtb2Rlcm4lMjBhcmNoaXRlY3R1cmV8ZW58MHx8fHwxNzcxNzQ3MDk3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "modern architecture"
+    },
+    {
+      "id": "m18",
+      "description": "Trending 3",
+      "imageUrl": "https://images.unsplash.com/photo-1550275994-2bc88dc68637?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhYnN0cmFjdCUyMGxpZ2h0c3xlbnwwfHx8fDE3NzE3ODYzMjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract lights"
+    },
+    {
+      "id": "m19",
+      "description": "Trending 4",
+      "imageUrl": "https://images.unsplash.com/photo-1487621167305-5d248087c724?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxmb3Jlc3QlMjBmb2d8ZW58MHx8fHwxNzcxNzg2MzI2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "forest fog"
+    },
+    {
+      "id": "m20",
+      "description": "Trending 5",
+      "imageUrl": "https://images.unsplash.com/photo-1638555097330-503fd1063ecf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxtb3VudGFpbiUyMHBlYWtzfGVufDB8fHx8MTc3MTczMTQwMXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mountain peaks"
+    },
+    {
+      "id": "m21",
+      "description": "New Release 1",
+      "imageUrl": "https://images.unsplash.com/photo-1553292770-4fad11d90109?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjeWJlcnB1bmslMjBzdHJlZXR8ZW58MHx8fHwxNzcxNzg2MzI2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cyberpunk street"
+    },
+    {
+      "id": "m22",
+      "description": "New Release 2",
+      "imageUrl": "https://images.unsplash.com/photo-1617374128851-c84e37dc9f37?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxkZXNlcnQlMjBsYW5kc2NhcGV8ZW58MHx8fHwxNzcxNzUzMzg4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "desert landscape"
+    },
+    {
+      "id": "m23",
+      "description": "New Release 3",
+      "imageUrl": "https://images.unsplash.com/photo-1615472768508-9db82090f4c6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxvY2VhbiUyMHdhdmVzfGVufDB8fHx8MTc3MTY5MDI3Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ocean waves"
+    },
+    {
+      "id": "m24",
+      "description": "New Release 4",
+      "imageUrl": "https://images.unsplash.com/photo-1520637645622-6740bb3491c3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtb3VudGFpbiUyMGNhYmlufGVufDB8fHx8MTc3MTc0MDMyN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mountain cabin"
+    },
+    {
+      "id": "m25",
+      "description": "New Release 5",
+      "imageUrl": "https://images.unsplash.com/photo-1719754523402-9eb4a4f8ee5f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhcmN0aWMlMjBpY2V8ZW58MHx8fHwxNzcxNzg2MzI2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "arctic ice"
+    },
+    {
+      "id": "m26",
+      "description": "History 1",
+      "imageUrl": "https://images.unsplash.com/photo-1691752515647-33ccc5f66cbd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8b2xkJTIwY2FzdGxlfGVufDB8fHx8MTc3MTc4NjMyNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "old castle"
+    },
+    {
+      "id": "m27",
+      "description": "History 2",
+      "imageUrl": "https://images.unsplash.com/photo-1484687742385-1249620c2687?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx2aW50YWdlJTIwY2FyfGVufDB8fHx8MTc3MTc1MzE4MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "vintage car"
+    },
+    {
+      "id": "m28",
+      "description": "History 3",
+      "imageUrl": "https://images.unsplash.com/photo-1732456604673-275c66408308?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjbGFzc2ljJTIwbGlicmFyeXxlbnwwfHx8fDE3NzE3ODYzMjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "classic library"
+    },
+    {
+      "id": "m29",
+      "description": "History 4",
+      "imageUrl": "https://images.unsplash.com/photo-1573540374799-d527e9ee392b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhbmNpZW50JTIwcnVpbnN8ZW58MHx8fHwxNzcxNzczOTk2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ancient ruins"
+    },
+    {
+      "id": "m30",
+      "description": "History 5",
+      "imageUrl": "https://images.unsplash.com/photo-1720774399979-3a809cde9595?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtdXNldW0lMjBzdGF0dWV8ZW58MHx8fHwxNzcxNzg2MzI2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "museum statue"
+    },
+    {
+      "id": "cw1",
+      "description": "Continue 1",
+      "imageUrl": "https://images.unsplash.com/photo-1713681482105-58aba3edbc5f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxibHVycmVkJTIwbW90aW9ufGVufDB8fHx8MTc3MTc4NjMyNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "blurred motion"
+    },
+    {
+      "id": "cw2",
+      "description": "Continue 2",
+      "imageUrl": "https://images.unsplash.com/photo-1565718814595-fc54aa6b2137?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxpbmR1c3RyaWFsJTIwZGFya3xlbnwwfHx8fDE3NzE3ODYzMjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "industrial dark"
+    },
+    {
+      "id": "cw3",
+      "description": "Continue 3",
+      "imageUrl": "https://images.unsplash.com/photo-1699099904406-cafb19c1b90e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzdWJ3YXklMjB0dW5uZWx8ZW58MHx8fHwxNzcxNzg2MzI2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "subway tunnel"
+    }
+  ]
 }
