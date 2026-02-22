@@ -55,8 +55,8 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-black/60 z-10" />
         </div>
         
-        <div className="relative z-20 h-full flex flex-col justify-end pb-32 px-8 md:px-20 max-w-screen-2xl mx-auto w-full">
-          <div className="space-y-8 max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000">
+        <div className="relative z-20 h-full flex flex-col justify-end pt-32 pb-32 px-8 md:px-20 max-w-screen-2xl mx-auto w-full">
+          <div className="space-y-8 max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000 mt-12">
             <div className="flex items-center gap-3">
               <span className="bg-[#E50914] px-3 py-1 rounded-sm text-white font-black tracking-widest text-[10px] uppercase shadow-[0_0_15px_rgba(229,9,20,0.5)]">
                 StreamVerse Original
@@ -70,7 +70,7 @@ export default function HomePage() {
               </h1>
             </div>
             
-            <p className="text-sm md:text-lg text-zinc-200 leading-relaxed max-w-xl font-bold drop-shadow-xl">
+            <p className="text-sm md:text-lg text-zinc-200 leading-[1.6] max-w-xl font-bold drop-shadow-xl">
               A daring scientist uncovers the price of altering history when she begins receiving warnings from her future self.
             </p>
             
@@ -87,10 +87,10 @@ export default function HomePage() {
       </section>
 
       {/* Main Content - High Contrast Rows */}
-      <main className="relative z-10 flex-grow bg-black mt-12">
+      <main className="relative z-10 flex-grow bg-black">
         <div className="space-y-24 pb-48">
           {continueWatching.length > 0 && (
-            <div className="animate-in fade-in duration-1000">
+            <div className="animate-in fade-in duration-1000 mt-12">
               <MovieRow title="Continue Watching" movies={continueWatching} />
             </div>
           )}
