@@ -40,7 +40,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-transparent flex flex-col overflow-x-hidden">
       <Navbar />
       
-      {/* Hero Section - Balanced visual rhythm */}
+      {/* Hero Section - Balanced visual rhythm with enhanced vibrance */}
       <section className="relative h-[80vh] w-full flex-shrink-0 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image 
@@ -48,7 +48,7 @@ export default function HomePage() {
             alt="Hero Banner" 
             fill
             priority
-            className="object-cover blur-[1px] animate-in zoom-in-105 duration-[20000ms] fill-mode-forwards"
+            className="object-cover blur-[1px] contrast-[1.05] animate-in zoom-in-105 duration-[20000ms] fill-mode-forwards"
             data-ai-hint="cinema movie"
           />
           <div className="absolute inset-0 hero-gradient-overlay z-10" />
@@ -58,24 +58,28 @@ export default function HomePage() {
         <div className="relative z-20 h-full flex flex-col justify-end pb-24 px-8 md:px-20 max-w-screen-2xl mx-auto w-full">
           <div className="space-y-6 max-w-xl animate-in fade-in slide-in-from-bottom-6 duration-1000">
             <div className="flex items-center gap-3">
-              <span className="bg-primary/90 px-2 py-0.5 rounded-sm text-white font-black tracking-widest text-[9px] uppercase shadow-lg shadow-primary/10">
+              <span className="bg-primary px-2 py-0.5 rounded-sm text-white font-black tracking-widest text-[9px] uppercase shadow-lg shadow-primary/20">
                 Original
               </span>
-              <span className="text-white/30 font-bold tracking-widest text-[9px] uppercase">
+              <span className="text-white/40 font-bold tracking-widest text-[9px] uppercase">
                 Season 1 Now Streaming
               </span>
             </div>
             
-            <h1 className="text-3xl md:text-4xl font-black text-white leading-[1.1] tracking-tighter uppercase">
-              CHRONO <br /> <span className="text-primary/80">ECHOES</span>
-            </h1>
+            <div className="relative">
+              {/* Atmospheric Glow behind Title */}
+              <div className="absolute -inset-x-20 -inset-y-10 bg-primary/5 blur-[100px] rounded-full z-0 pointer-events-none" />
+              <h1 className="relative z-10 text-3xl md:text-4xl font-black text-white leading-[1.1] tracking-tighter uppercase">
+                CHRONO <br /> <span className="text-primary">ECHOES</span>
+              </h1>
+            </div>
             
             <p className="text-xs md:text-sm text-zinc-400 leading-relaxed max-w-lg font-medium">
               A daring scientist uncovers the price of altering history when she begins receiving warnings from her future self.
             </p>
             
             <div className="flex flex-wrap gap-3 pt-2">
-              <Button size="lg" className="bg-primary/90 hover:bg-primary text-white h-10 px-8 text-xs font-bold rounded-md flex items-center gap-2 transition-all active:scale-95 shadow-xl shadow-primary/5">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white h-10 px-8 text-xs font-bold rounded-md flex items-center gap-2 transition-all active:scale-95 shadow-xl shadow-primary/10">
                 <Play className="fill-current w-4 h-4" /> Play
               </Button>
               <Button size="lg" variant="secondary" className="bg-white/5 hover:bg-white/10 backdrop-blur-md text-white border border-white/5 h-10 px-8 text-xs font-bold rounded-md flex items-center gap-2 transition-all active:scale-95">
