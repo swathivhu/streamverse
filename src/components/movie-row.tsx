@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useRef, useState } from 'react';
@@ -64,9 +63,19 @@ export default function MovieRow({ title, movies }: MovieRowProps) {
                 className="w-full h-full object-cover rounded-md"
                 loading="lazy"
               />
+
+              {/* Minimal Progress Bar (Continue Watching) */}
+              {movie.progress !== undefined && (
+                <div className="absolute bottom-0 left-0 w-full h-[3px] bg-zinc-800 z-10">
+                  <div 
+                    className="h-full bg-primary shadow-[0_0_8px_rgba(184,29,36,0.8)]" 
+                    style={{ width: `${movie.progress}%` }} 
+                  />
+                </div>
+              )}
               
               {/* Minimal Title Overlay on Hover */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 z-20">
                 <div className="flex flex-col gap-1">
                   <h3 className="text-white font-bold text-sm md:text-base line-clamp-1 drop-shadow-lg uppercase tracking-tight">
                     {movie.title}

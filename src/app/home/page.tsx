@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Navbar from '@/components/navbar';
 import MovieRow from '@/components/movie-row';
 import TrailerGenerator from '@/components/trailer-generator';
-import { CATEGORIES } from '@/lib/mock-data';
+import { CATEGORIES, MOVIES } from '@/lib/mock-data';
 import { Play, Info, Clapperboard, Facebook, Instagram, Twitter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useUser } from '@/firebase';
@@ -33,6 +33,9 @@ export default function HomePage() {
   }
 
   if (!user) return null;
+
+  // Filter movies that have progress tracked for "Continue Watching"
+  const continueWatching = MOVIES.filter(movie => movie.progress !== undefined).slice(0, 3);
 
   return (
     <div className="min-h-screen bg-transparent flex flex-col overflow-x-hidden">
@@ -89,6 +92,13 @@ export default function HomePage() {
       {/* Main Content Area */}
       <main className="relative z-10 flex-grow bg-transparent">
         <div className="space-y-24 pb-32 pt-12">
+          {/* Continue Watching Section */}
+          {continueWatching.length > 0 && (
+            <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
+              <MovieRow title="Continue Watching" movies={continueWatching} />
+            </div>
+          )}
+
           {CATEGORIES.map((category) => (
             <div key={category.name}>
               <MovieRow title={category.name} movies={category.items} />
