@@ -3,15 +3,33 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Clapperboard, LogOut, Search, Bell } from 'lucide-react';
+import { 
+  Clapperboard, 
+  LogOut, 
+  Search, 
+  Bell, 
+  User, 
+  Settings, 
+  HelpCircle 
+} from 'lucide-react';
 import Link from 'next/link';
 import { signOut } from 'firebase/auth';
-import { useAuth } from '@/firebase';
+import { useAuth, useUser } from '@/firebase';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const router = useRouter();
   const auth = useAuth();
+  const { user } = useUser();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,14 +49,14 @@ export default function Navbar() {
   };
 
   return (
-    <nav className={`fixed top-0 z-50 w-full px-4 md:px-12 py-4 transition-all duration-300 flex items-center justify-between ${isScrolled ? 'bg-background shadow-lg' : 'bg-transparent'}`}>
-      <div className="flex items-center gap-8">
-        <Link href="/home" className="flex items-center gap-2">
-          <Clapperboard className="w-8 h-8 text-primary" />
+    <nav className={`fixed top-0 z-50 w-full px-4 md:px-12 py-3 transition-all duration-500 flex items-center justify-between ${isScrolled ? 'bg-background/95 backdrop-blur-md shadow-xl' : 'bg-transparent'}`}>
+      <div className="flex items-center gap-10">
+        <Link href="/home" className="flex items-center gap-2 group">
+          <Clapperboard className="w-8 h-8 text-primary transition-transform group-hover:scale-110" />
           <span className="text-2xl font-black text-primary tracking-tighter hidden md:block uppercase">StreamVerse</span>
         </Link>
-        <div className="hidden lg:flex items-center gap-6 text-sm text-zinc-300">
-          <Link href="#" className="hover:text-white transition-colors font-medium">Home</Link>
+        <div className="hidden lg:flex items-center gap-6 text-sm font-medium text-zinc-400">
+          <Link href="/home" className="text-white hover:text-white transition-colors">Home</Link>
           <Link href="#" className="hover:text-white transition-colors">TV Shows</Link>
           <Link href="#" className="hover:text-white transition-colors">Movies</Link>
           <Link href="#" className="hover:text-white transition-colors">New & Popular</Link>
@@ -47,21 +65,54 @@ export default function Navbar() {
       </div>
       
       <div className="flex items-center gap-4 md:gap-6">
-        <Search className="w-5 h-5 text-white cursor-pointer hover:text-primary transition-colors" />
-        <Bell className="w-5 h-5 text-white cursor-pointer hover:text-primary transition-colors" />
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-zinc-800 rounded overflow-hidden">
-             <img src="https://picsum.photos/seed/user/200/200" alt="Profile" className="w-full h-full object-cover" />
-          </div>
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            onClick={handleLogout} 
-            className="text-zinc-400 hover:text-white hover:bg-zinc-800"
-          >
-            <LogOut className="w-5 h-5" />
-          </Button>
+        <div className="hidden sm:flex items-center gap-6">
+          <Search className="w-5 h-5 text-zinc-300 cursor-pointer hover:text-white transition-colors" />
+          <Bell className="w-5 h-5 text-zinc-300 cursor-pointer hover:text-white transition-colors" />
         </div>
+        
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="relative h-9 w-9 rounded-md p-0 overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-colors">
+              <Avatar className="h-9 w-9 rounded-none">
+                <AvatarImage src={`https://picsum.photos/seed/${user?.uid || 'user'}/200/200`} alt="Profile" />
+                <AvatarFallback className="rounded-none bg-zinc-800 text-xs">
+                  {user?.email?.[0].toUpperCase() || <User className="w-4 h-4" />}
+                </AvatarFallback>
+              </Avatar>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56 bg-zinc-950 border-zinc-800" align="end" forceMount>
+            <DropdownMenuLabel className="font-normal">
+              <div className="flex flex-col space-y-1">
+                <p className="text-sm font-medium leading-none text-white">My Account</p>
+                <p className="text-xs leading-none text-zinc-500 truncate">
+                  {user?.email}
+                </p>
+              </div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator className="bg-zinc-800" />
+            <DropdownMenuItem className="text-zinc-400 focus:text-white focus:bg-zinc-800 cursor-pointer">
+              <User className="mr-2 h-4 w-4" />
+              <span>Profile</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="text-zinc-400 focus:text-white focus:bg-zinc-800 cursor-pointer">
+              <Settings className="mr-2 h-4 w-4" />
+              <span>Account Settings</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="text-zinc-400 focus:text-white focus:bg-zinc-800 cursor-pointer">
+              <HelpCircle className="mr-2 h-4 w-4" />
+              <span>Help Center</span>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator className="bg-zinc-800" />
+            <DropdownMenuItem 
+              onClick={handleLogout}
+              className="text-primary focus:text-primary focus:bg-primary/10 cursor-pointer font-semibold"
+            >
+              <LogOut className="mr-2 h-4 w-4" />
+              <span>Sign Out of StreamVerse</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </nav>
   );
