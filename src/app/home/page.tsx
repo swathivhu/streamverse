@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect } from 'react';
@@ -36,7 +35,7 @@ export default function HomePage() {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-transparent flex flex-col overflow-x-hidden">
       <Navbar />
       
       {/* Cinematic Hero Banner Section */}
@@ -51,7 +50,7 @@ export default function HomePage() {
             data-ai-hint="cinema movie"
           />
           {/* Multi-layered cinematic gradients */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent z-10" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent z-10" />
         </div>
         
@@ -88,7 +87,7 @@ export default function HomePage() {
       </section>
 
       {/* Main Content Area */}
-      <main className="relative z-10 flex-grow bg-background">
+      <main className="relative z-10 flex-grow bg-transparent">
         <div className="space-y-24 pb-32 pt-12">
           {CATEGORIES.map((category) => (
             <div key={category.name}>
@@ -97,14 +96,16 @@ export default function HomePage() {
           ))}
           
           {/* AI Trailer Tool Section */}
-          <section className="max-w-7xl mx-auto px-6 md:px-12 mt-12">
-            <TrailerGenerator />
+          <section className="max-w-7xl mx-auto px-6 md:px-12 mt-12 relative">
+             {/* Subtle glowing anchor for the AI section */}
+             <div className="absolute -inset-24 bg-primary/5 blur-[120px] rounded-full pointer-events-none -z-10" />
+             <TrailerGenerator />
           </section>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="bg-black border-t border-zinc-900 py-20 px-6 md:px-12 text-zinc-500 text-sm">
+      <footer className="bg-black/40 backdrop-blur-md border-t border-white/5 py-20 px-6 md:px-12 text-zinc-500 text-sm">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
             <div className="space-y-6">
@@ -149,7 +150,7 @@ export default function HomePage() {
               </ul>
             </div>
           </div>
-          <div className="pt-10 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
             <p className="text-xs text-zinc-600">© 2024-2025 StreamVerse Entertainment Inc. Global HQ. All rights reserved.</p>
             <div className="flex gap-8 text-xs font-medium text-zinc-500">
               <span className="hover:text-white cursor-pointer transition-colors">Cookie Preferences</span>
