@@ -39,8 +39,8 @@ export default function MovieRow({ title, movies }: MovieRowProps) {
         <button 
           onClick={() => scroll('left')}
           className={cn(
-            "absolute left-0 top-0 bottom-0 z-40 bg-black/60 px-2 md:px-4 flex items-center justify-center transition-all duration-300 hover:bg-black/80",
-            showArrows ? "opacity-100" : "opacity-0"
+            "absolute left-0 top-0 bottom-0 z-40 bg-black/60 px-2 md:px-4 flex items-center justify-center transition-all duration-300 hover:bg-black/80 hover:scale-110 active:scale-95",
+            showArrows ? "opacity-100" : "opacity-0 pointer-events-none"
           )}
           aria-label="Scroll left"
         >
@@ -85,8 +85,8 @@ export default function MovieRow({ title, movies }: MovieRowProps) {
         <button 
           onClick={() => scroll('right')}
           className={cn(
-            "absolute right-0 top-0 bottom-0 z-40 bg-black/60 px-2 md:px-4 flex items-center justify-center transition-all duration-300 hover:bg-black/80",
-            showArrows ? "opacity-100" : "opacity-0"
+            "absolute right-0 top-0 bottom-0 z-40 bg-black/60 px-2 md:px-4 flex items-center justify-center transition-all duration-300 hover:bg-black/80 hover:scale-110 active:scale-95",
+            showArrows ? "opacity-100" : "opacity-0 pointer-events-none"
           )}
           aria-label="Scroll right"
         >
