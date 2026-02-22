@@ -48,17 +48,17 @@ export default function HomePage() {
             alt="Hero Banner" 
             fill
             priority
-            className="object-cover animate-in zoom-in-105 duration-[20000ms] fill-mode-forwards"
+            className="object-cover blur-[2px] animate-in zoom-in-105 duration-[20000ms] fill-mode-forwards"
             data-ai-hint="cinema movie"
           />
           {/* Multi-layered cinematic overlays */}
           <div className="absolute inset-0 hero-gradient-overlay z-10" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-transparent z-10" />
-          <div className="absolute inset-0 bg-black/30 z-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/85 via-background/20 to-transparent z-10" />
+          <div className="absolute inset-0 bg-black/50 z-10" />
         </div>
         
         <div className="relative z-20 h-full flex flex-col justify-end pb-24 px-6 md:px-16 max-w-screen-2xl mx-auto w-full">
-          <div className="space-y-6 max-w-xl animate-in fade-in slide-in-from-bottom-6 duration-1000">
+          <div className="space-y-8 max-w-xl animate-in fade-in slide-in-from-bottom-6 duration-1000">
             <div className="flex items-center gap-3">
               <span className="bg-primary px-2 py-0.5 rounded-sm text-white font-black tracking-widest text-[10px] uppercase shadow-lg shadow-primary/20">
                 Original
@@ -68,7 +68,7 @@ export default function HomePage() {
               </span>
             </div>
             
-            <h1 className="text-4xl md:text-6xl font-black text-white leading-[1.1] tracking-tighter uppercase">
+            <h1 className="text-3xl md:text-5xl font-black text-white leading-[1.1] tracking-tighter uppercase">
               CHRONO <br /> <span className="text-primary/90">ECHOES</span>
             </h1>
             
@@ -76,7 +76,7 @@ export default function HomePage() {
               A daring scientist uncovers the price of altering history when she begins receiving warnings from her future self.
             </p>
             
-            <div className="flex flex-wrap gap-4 pt-4">
+            <div className="flex flex-wrap gap-4 pt-2">
               <Button size="lg" className="bg-primary hover:bg-primary/90 text-white h-11 px-8 text-sm font-bold rounded-md flex items-center gap-2 transition-all active:scale-95 shadow-xl shadow-primary/10">
                 <Play className="fill-current w-4 h-4" /> Play
               </Button>
