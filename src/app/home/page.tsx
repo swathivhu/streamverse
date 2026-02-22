@@ -38,56 +38,65 @@ export default function HomePage() {
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
       
-      {/* Hero Banner Section */}
-      <section className="relative h-[85vh] w-full flex-shrink-0">
-        <Image 
-          src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&q=80" 
-          alt="Hero Banner" 
-          fill
-          priority
-          className="object-cover"
-          data-ai-hint="cinema movie"
-        />
-        {/* Complex gradient for premium readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-black/20" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-transparent" />
+      {/* Cinematic Hero Banner Section */}
+      <section className="relative h-[90vh] w-full flex-shrink-0 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image 
+            src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&q=80" 
+            alt="Hero Banner" 
+            fill
+            priority
+            className="object-cover animate-in zoom-in-110 duration-[20000ms] fill-mode-forwards"
+            data-ai-hint="cinema movie"
+          />
+          {/* Multi-layered cinematic gradients */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent z-10" />
+        </div>
         
-        <div className="relative h-full flex flex-col justify-center px-6 md:px-12 max-w-5xl space-y-6 pt-20">
-          <div className="space-y-4 animate-in fade-in slide-in-from-left-8 duration-700">
-            <div className="flex items-center gap-2">
-              <span className="w-8 h-[2px] bg-primary"></span>
-              <span className="text-primary font-bold tracking-[0.4em] text-xs uppercase text-shadow-premium">Original Series</span>
+        <div className="relative z-20 h-full flex flex-col justify-end pb-24 px-6 md:px-16 max-w-7xl mx-auto w-full">
+          <div className="space-y-6 max-w-2xl animate-in fade-in slide-in-from-bottom-12 duration-1000">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center w-6 h-6 bg-primary rounded-sm shadow-[0_0_15px_rgba(184,29,36,0.6)]">
+                <Clapperboard className="w-4 h-4 text-white" />
+              </div>
+              <span className="text-primary font-black tracking-[0.3em] text-[10px] uppercase text-shadow-premium">
+                StreamVerse Original
+              </span>
             </div>
-            <h1 className="text-6xl md:text-8xl font-black text-white leading-[0.9] tracking-tighter drop-shadow-2xl">
+            
+            <h1 className="text-6xl md:text-8xl font-black text-white leading-[0.9] tracking-tighter drop-shadow-2xl uppercase italic">
               CHRONO <br />
               <span className="text-primary">ECHOES</span>
             </h1>
-          </div>
-          <p className="text-lg md:text-xl text-zinc-200 max-w-xl leading-relaxed drop-shadow-lg text-shadow-premium animate-in fade-in slide-in-from-left-12 duration-1000">
-            A brilliant scientist discovers a way to send messages to her past self, but every correction creates a darker reality. Experience the mind-bending thrill of the decade.
-          </p>
-          <div className="flex flex-wrap gap-4 pt-6 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-            <Button className="bg-white hover:bg-zinc-200 text-black h-16 px-10 text-xl font-bold rounded-md flex items-center gap-3 transition-transform hover:scale-105 active:scale-95 shadow-xl">
-              <Play className="fill-current w-6 h-6" /> Play
-            </Button>
-            <Button variant="secondary" className="bg-zinc-500/30 hover:bg-zinc-500/50 backdrop-blur-md text-white h-16 px-10 text-xl font-bold rounded-md flex items-center gap-3 transition-transform hover:scale-105 active:scale-95 shadow-xl">
-              <Info className="w-6 h-6" /> More Info
-            </Button>
+            
+            <p className="text-lg md:text-xl text-zinc-200 leading-relaxed drop-shadow-lg text-shadow-premium max-w-xl line-clamp-3">
+              When a scientist discovers a way to send messages to her past, she realizes that changing the timeline comes at a devastating cost. A mind-bending thriller that redefines fate.
+            </p>
+            
+            <div className="flex flex-wrap gap-4 pt-4">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white h-14 px-10 text-xl font-bold rounded-md flex items-center gap-3 transition-all hover:scale-105 active:scale-95 shadow-2xl">
+                <Play className="fill-current w-6 h-6" /> Play
+              </Button>
+              <Button size="lg" variant="secondary" className="bg-zinc-500/20 hover:bg-zinc-500/40 backdrop-blur-md text-white border border-white/20 h-14 px-10 text-xl font-bold rounded-md flex items-center gap-3 transition-all hover:scale-105 active:scale-95">
+                <Info className="w-6 h-6" /> More Info
+              </Button>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Main Content Area */}
-      <main className="relative z-10 flex-grow bg-background pb-32">
-        <div className="space-y-16 md:space-y-24 pt-12">
+      <main className="relative z-10 flex-grow bg-background">
+        <div className="space-y-12 pb-32 -mt-16 relative z-30">
           {CATEGORIES.map((category, index) => (
-            <div key={category.name} className={index === 0 ? "mt-4" : ""}>
+            <div key={category.name}>
               <MovieRow title={category.name} movies={category.items} />
             </div>
           ))}
           
           {/* AI Trailer Tool Section */}
-          <section className="max-w-7xl mx-auto px-6 md:px-12">
+          <section className="max-w-7xl mx-auto px-6 md:px-12 mt-12">
             <TrailerGenerator />
           </section>
         </div>
