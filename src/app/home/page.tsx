@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Navbar from '@/components/navbar';
 import MovieRow from '@/components/movie-row';
 import TrailerGenerator from '@/components/trailer-generator';
-import { CATEGORIES, CONTINUE_WATCHING, Movie } from '@/lib/mock-data';
+import { CONTINUE_WATCHING, Movie } from '@/lib/mock-data';
 import { Play, Info, Clapperboard, Facebook, Instagram, Twitter, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useUser } from '@/firebase';
@@ -21,7 +21,10 @@ import {
 export default function HomePage() {
   const { user, isUserLoading } = useUser();
   const [trendingMovies, setTrendingMovies] = useState<Movie[]>([]);
-  const [isLoadingTrending, setIsLoadingTrending] = useState(true);
+  const [topRatedMovies, setTopRatedMovies] = useState<Movie[]>([]);
+  const [upcomingMovies, setUpcomingMovies] = useState<Movie[]>([]);
+  const [isLoadingMovies, setIsLoadingMovies] = useState(true);
+  
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Movie[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -37,22 +40,34 @@ export default function HomePage() {
   useEffect(() => {
     async function fetchMovies() {
       try {
-        const res = await fetch('/api/tmdb');
-        const data = await res.json();
-        
-        if (data.results) {
-          const mappedMovies: Movie[] = data.results.map((m: any) => ({
+        const [trendingRes, topRatedRes, upcomingRes] = await Promise.all([
+          fetch('/api/tmdb?type=trending'),
+          fetch('/api/tmdb?type=top_rated'),
+          fetch('/api/tmdb?type=upcoming')
+        ]);
+
+        const [trendingData, topRatedData, upcomingData] = await Promise.all([
+          trendingRes.json(),
+          topRatedRes.json(),
+          upcomingRes.json()
+        ]);
+
+        const mapMovies = (results: any[]) => 
+          (results || []).map((m: any) => ({
             id: m.id.toString(),
             title: m.title || m.name,
             genre: 'Movie',
             thumbnail: `https://image.tmdb.org/t/p/w1280${m.backdrop_path || m.poster_path}`,
           }));
-          setTrendingMovies(mappedMovies);
-        }
+
+        setTrendingMovies(mapMovies(trendingData.results));
+        setTopRatedMovies(mapMovies(topRatedData.results));
+        setUpcomingMovies(mapMovies(upcomingData.results));
+
       } catch (error) {
-        console.error("Failed to fetch trending movies:", error);
+        console.error("Failed to fetch movies:", error);
       } finally {
-        setIsLoadingTrending(false);
+        setIsLoadingMovies(false);
       }
     }
   
@@ -143,22 +158,22 @@ export default function HomePage() {
       <Navbar onSearch={handleSearch} />
       
       {/* Hero Section */}
-      <section className="relative min-h-[85vh] w-full flex flex-col">
+      <section className="relative min-h-[85vh] w-full flex flex-col justify-center">
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image 
             src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&q=80" 
             alt="Hero Banner" 
             fill
             priority
-            className="object-cover contrast-[1.25] saturate-[1.25] brightness-75 blur-[1px] animate-hero-zoom"
+            className="object-cover contrast-[1.25] saturate-[1.25] brightness-75 animate-hero-zoom"
             data-ai-hint="cinema movie"
           />
           <div className="absolute inset-0 hero-gradient-overlay z-10" />
-          <div className="absolute inset-0 bg-black/40 z-10" />
+          <div className="absolute inset-0 bg-black/20 z-10" />
         </div>
         
-        <div className="relative z-20 flex-grow flex flex-col justify-center pt-40 pb-20 px-8 md:px-20 max-w-screen-2xl mx-auto w-full">
-          <div className="space-y-8 max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000 mt-12">
+        <div className="relative z-20 px-8 md:px-20 max-w-screen-2xl mx-auto w-full pt-20 pb-20">
+          <div className="space-y-8 max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000">
             <div className="flex items-center gap-3">
               <span className="bg-primary px-3 py-1 rounded-sm text-white font-black tracking-widest text-[10px] uppercase shadow-[0_0_15px_rgba(229,9,20,0.5)]">
                 StreamVerse Original
@@ -211,11 +226,12 @@ export default function HomePage() {
                 {trendingMovies.length > 0 && (
                   <MovieRow title="Trending Now" movies={trendingMovies} onMovieClick={handleMovieClick} />
                 )}
-                {CATEGORIES.filter(cat => cat.name !== 'Trending Now').map((category) => (
-                  <div key={category.name}>
-                    <MovieRow title={category.name} movies={category.items} onMovieClick={handleMovieClick} />
-                  </div>
-                ))}
+                {topRatedMovies.length > 0 && (
+                  <MovieRow title="Top Rated" movies={topRatedMovies} onMovieClick={handleMovieClick} />
+                )}
+                {upcomingMovies.length > 0 && (
+                  <MovieRow title="Upcoming" movies={upcomingMovies} onMovieClick={handleMovieClick} />
+                )}
               </div>
             </>
           )}
@@ -226,7 +242,7 @@ export default function HomePage() {
         </div>
       </main>
 
-      {/* Improved Netflix-Style Trailer Modal */}
+      {/* Trailer Modal */}
       <Dialog open={isTrailerModalOpen} onOpenChange={setIsTrailerModalOpen}>
         <DialogContent className="max-w-[95vw] md:max-w-6xl bg-black border-none p-0 overflow-hidden shadow-[0_0_100px_rgba(0,0,0,1)]">
           <DialogHeader className="sr-only">
@@ -248,7 +264,6 @@ export default function HomePage() {
               </div>
             )}
             
-            {/* Prominent Close Button for Premium Feel */}
             <button 
               onClick={() => setIsTrailerModalOpen(false)}
               className="absolute top-4 right-4 z-[60] p-2 bg-black/50 hover:bg-black/80 rounded-full transition-all text-white/70 hover:text-white backdrop-blur-sm border border-white/10"
