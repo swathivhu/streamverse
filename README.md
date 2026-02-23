@@ -6,6 +6,11 @@ StreamVerse delivers a cinematic browsing experience with dynamic categories, re
 
 ---
 
+## live demo
+https://streamverse-blue.vercel.app
+
+---
+
 ## 🚀 Features
 
 - 🔍 Real-time movie search
@@ -29,7 +34,8 @@ StreamVerse delivers a cinematic browsing experience with dynamic categories, re
 
 ## 📸 Screenshots
 
-(Add screenshots here after deployment)
+<img width="1892" height="843" alt="image" src="https://github.com/user-attachments/assets/a2ed6493-9969-4136-bb4c-6bf6c738df52" />
+
 
 ---
 
