@@ -7,7 +7,7 @@ import Navbar from '@/components/navbar';
 import MovieRow from '@/components/movie-row';
 import TrailerGenerator from '@/components/trailer-generator';
 import { CATEGORIES, CONTINUE_WATCHING, Movie } from '@/lib/mock-data';
-import { Play, Info, Clapperboard, Facebook, Instagram, Twitter, X } from 'lucide-react';
+import { Play, Info, Clapperboard, Facebook, Instagram, Twitter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useUser } from '@/firebase';
 import { useToast } from '@/hooks/use-toast';
