@@ -7,9 +7,16 @@ import Navbar from '@/components/navbar';
 import MovieRow from '@/components/movie-row';
 import TrailerGenerator from '@/components/trailer-generator';
 import { CATEGORIES, CONTINUE_WATCHING, Movie } from '@/lib/mock-data';
-import { Play, Info, Clapperboard, Facebook, Instagram, Twitter } from 'lucide-react';
+import { Play, Info, Clapperboard, Facebook, Instagram, Twitter, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useUser } from '@/firebase';
+import { useToast } from '@/hooks/use-toast';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 export default function HomePage() {
   const { user, isUserLoading } = useUser();
@@ -18,7 +25,14 @@ export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Movie[]>([]);
   const [isSearching, setIsSearching] = useState(false);
+  
+  // Trailer State
+  const [trailerKey, setTrailerKey] = useState<string | null>(null);
+  const [isTrailerModalOpen, setIsTrailerModalOpen] = useState(false);
+  const [isLoadingTrailer, setIsLoadingTrailer] = useState(false);
+
   const router = useRouter();
+  const { toast } = useToast();
 
   useEffect(() => {
     async function fetchMovies() {
@@ -76,6 +90,45 @@ export default function HomePage() {
     }
   }, []);
 
+  const handleMovieClick = async (movieId: string) => {
+    // TMDB IDs are numeric strings. Mock IDs start with letters (t, n, a, s, cw).
+    // We only try to fetch trailers for numeric IDs.
+    if (!/^\d+$/.test(movieId)) {
+      toast({
+        title: "Limited Content",
+        description: "Trailers are currently available for our trending and global library.",
+        variant: "default"
+      });
+      return;
+    }
+
+    setIsLoadingTrailer(true);
+    try {
+      const res = await fetch(`/api/trailer?movieId=${movieId}`);
+      const data = await res.json();
+      
+      if (data.trailerKey) {
+        setTrailerKey(data.trailerKey);
+        setIsTrailerModalOpen(true);
+      } else {
+        toast({
+          title: "No Trailer Found",
+          description: "We couldn't find an official trailer for this title.",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      console.error("Trailer fetch failed:", error);
+      toast({
+        title: "Connection Error",
+        description: "Failed to load trailer. Please try again later.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoadingTrailer(false);
+    }
+  };
+
   if (isUserLoading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
@@ -92,7 +145,7 @@ export default function HomePage() {
       <Navbar onSearch={handleSearch} />
       
       {/* Hero Section */}
-      <section className="relative min-h-[85vh] w-full flex flex-col pt-20">
+      <section className="relative min-h-[85vh] w-full flex flex-col">
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image 
             src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&q=80" 
@@ -145,23 +198,24 @@ export default function HomePage() {
               <MovieRow 
                 title={isSearching ? `Searching for "${searchQuery}"...` : `Results for "${searchQuery}"`} 
                 movies={searchResults} 
+                onMovieClick={handleMovieClick}
               />
             </div>
           ) : (
             <>
               {CONTINUE_WATCHING.length > 0 && (
                 <div className="animate-in fade-in duration-1000 mt-12">
-                  <MovieRow title="Continue Watching" movies={CONTINUE_WATCHING} />
+                  <MovieRow title="Continue Watching" movies={CONTINUE_WATCHING} onMovieClick={handleMovieClick} />
                 </div>
               )}
 
               <div className="space-y-24">
                 {trendingMovies.length > 0 && (
-                  <MovieRow title="Trending Now" movies={trendingMovies} />
+                  <MovieRow title="Trending Now" movies={trendingMovies} onMovieClick={handleMovieClick} />
                 )}
                 {CATEGORIES.filter(cat => cat.name !== 'Trending Now').map((category) => (
                   <div key={category.name}>
-                    <MovieRow title={category.name} movies={category.items} />
+                    <MovieRow title={category.name} movies={category.items} onMovieClick={handleMovieClick} />
                   </div>
                 ))}
               </div>
@@ -173,6 +227,29 @@ export default function HomePage() {
           </section>
         </div>
       </main>
+
+      {/* Trailer Modal */}
+      <Dialog open={isTrailerModalOpen} onOpenChange={setIsTrailerModalOpen}>
+        <DialogContent className="max-w-5xl bg-black border-zinc-800 p-0 overflow-hidden">
+          <DialogHeader className="sr-only">
+            <DialogTitle>Movie Trailer</DialogTitle>
+          </DialogHeader>
+          <div className="aspect-video w-full bg-zinc-900 relative">
+            {trailerKey ? (
+              <iframe
+                src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&rel=0`}
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <div className="flex items-center justify-center h-full text-zinc-500">
+                Loading trailer...
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Footer */}
       <footer className="bg-black border-t border-white/5 py-32 px-8 md:px-20 text-zinc-500 text-[11px] font-bold">

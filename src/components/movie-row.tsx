@@ -8,9 +8,10 @@ import { cn } from '@/lib/utils';
 interface MovieRowProps {
   title: string;
   movies: Movie[];
+  onMovieClick?: (movieId: string) => void;
 }
 
-export default function MovieRow({ title, movies }: MovieRowProps) {
+export default function MovieRow({ title, movies, onMovieClick }: MovieRowProps) {
   const rowRef = useRef<HTMLDivElement>(null);
   const [showArrows, setShowArrows] = useState(false);
 
@@ -58,6 +59,7 @@ export default function MovieRow({ title, movies }: MovieRowProps) {
           {movies.map((movie) => (
             <div 
               key={movie.id} 
+              onClick={() => onMovieClick?.(movie.id)}
               className="flex-none w-[160px] md:w-[320px] aspect-[16/9] relative rounded-md group/item cursor-pointer movie-card-transition hover:scale-105 hover:z-50 origin-bottom shadow-2xl snap-start bg-zinc-900 overflow-hidden"
             >
               <img 
