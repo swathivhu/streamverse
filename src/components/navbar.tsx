@@ -26,7 +26,11 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from '@/lib/utils';
 
-export default function Navbar() {
+interface NavbarProps {
+  onSearch?: (query: string) => void;
+}
+
+export default function Navbar({ onSearch }: NavbarProps) {
   const router = useRouter();
   const pathname = usePathname();
   const auth = useAuth();
@@ -68,7 +72,7 @@ export default function Navbar() {
             </span>
           </Link>
           
-          <div className="hidden lg:flex items-center gap-8 h-full text-[15px] font-semibold tracking-widest uppercase">
+          <div className="hidden lg:flex items-center gap-8 h-full text-[16px] font-semibold tracking-widest uppercase">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -92,7 +96,16 @@ export default function Navbar() {
         
         <div className="flex items-center gap-8 h-full">
           <div className="flex items-center gap-6">
-            <Search className="w-5 h-5 text-white cursor-pointer hover:text-zinc-300 transition-colors" />
+            <div className="hidden sm:flex items-center gap-3 bg-zinc-900/50 border border-white/10 rounded-sm px-4 py-1.5 focus-within:border-white/30 transition-all">
+              <Search className="w-4 h-4 text-zinc-400" />
+              <input 
+                type="text"
+                placeholder="Titles, people, genres"
+                className="bg-transparent border-none outline-none text-[13px] text-white placeholder:text-zinc-600 w-32 md:w-64 font-medium"
+                onChange={(e) => onSearch?.(e.target.value)}
+              />
+            </div>
+            
             <div className="relative cursor-pointer group">
               <Bell className="w-5 h-5 text-white group-hover:text-zinc-300 transition-colors" />
               <span className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full border-2 border-black" />

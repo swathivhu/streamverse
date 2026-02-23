@@ -1,7 +1,6 @@
-
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Navbar from '@/components/navbar';
@@ -16,6 +15,9 @@ export default function HomePage() {
   const { user, isUserLoading } = useUser();
   const [trendingMovies, setTrendingMovies] = useState<Movie[]>([]);
   const [isLoadingTrending, setIsLoadingTrending] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<Movie[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -43,6 +45,37 @@ export default function HomePage() {
     fetchMovies();
   }, []);
 
+  const handleSearch = useCallback(async (query: string) => {
+    setSearchQuery(query);
+    if (!query.trim()) {
+      setSearchResults([]);
+      setIsSearching(false);
+      return;
+    }
+
+    setIsSearching(true);
+    try {
+      const res = await fetch(`/api/search?query=${encodeURIComponent(query)}`);
+      const data = await res.json();
+      
+      if (data.results) {
+        const mappedResults: Movie[] = data.results.map((m: any) => ({
+          id: m.id.toString(),
+          title: m.title || m.name,
+          genre: 'Movie',
+          thumbnail: m.backdrop_path || m.poster_path 
+            ? `https://image.tmdb.org/t/p/w500${m.backdrop_path || m.poster_path}`
+            : 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80',
+        }));
+        setSearchResults(mappedResults);
+      }
+    } catch (error) {
+      console.error("Search failed:", error);
+    } finally {
+      setIsSearching(false);
+    }
+  }, []);
+
   if (isUserLoading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
@@ -56,7 +89,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-black flex flex-col overflow-x-hidden">
-      <Navbar />
+      <Navbar onSearch={handleSearch} />
       
       {/* Hero Section */}
       <section className="relative min-h-[85vh] w-full flex flex-col pt-20">
@@ -73,7 +106,7 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-black/40 z-10" />
         </div>
         
-        <div className="relative z-20 flex-grow flex flex-col justify-center pt-32 pb-20 px-8 md:px-20 max-w-screen-2xl mx-auto w-full">
+        <div className="relative z-20 flex-grow flex flex-col justify-center pt-40 pb-20 px-8 md:px-20 max-w-screen-2xl mx-auto w-full">
           <div className="space-y-8 max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000 mt-12">
             <div className="flex items-center gap-3">
               <span className="bg-primary px-3 py-1 rounded-sm text-white font-black tracking-widest text-[10px] uppercase shadow-[0_0_15px_rgba(229,9,20,0.5)]">
@@ -107,22 +140,33 @@ export default function HomePage() {
       {/* Main Content */}
       <main className="relative z-10 flex-grow bg-black">
         <div className="space-y-24 pb-48">
-          {CONTINUE_WATCHING.length > 0 && (
-            <div className="animate-in fade-in duration-1000 mt-12">
-              <MovieRow title="Continue Watching" movies={CONTINUE_WATCHING} />
+          {searchQuery ? (
+            <div className="animate-in fade-in duration-500 mt-12">
+              <MovieRow 
+                title={isSearching ? `Searching for "${searchQuery}"...` : `Results for "${searchQuery}"`} 
+                movies={searchResults} 
+              />
             </div>
-          )}
+          ) : (
+            <>
+              {CONTINUE_WATCHING.length > 0 && (
+                <div className="animate-in fade-in duration-1000 mt-12">
+                  <MovieRow title="Continue Watching" movies={CONTINUE_WATCHING} />
+                </div>
+              )}
 
-          <div className="space-y-24">
-            {trendingMovies.length > 0 && (
-              <MovieRow title="Trending Now" movies={trendingMovies} />
-            )}
-            {CATEGORIES.filter(cat => cat.name !== 'Trending Now').map((category) => (
-              <div key={category.name}>
-                <MovieRow title={category.name} movies={category.items} />
+              <div className="space-y-24">
+                {trendingMovies.length > 0 && (
+                  <MovieRow title="Trending Now" movies={trendingMovies} />
+                )}
+                {CATEGORIES.filter(cat => cat.name !== 'Trending Now').map((category) => (
+                  <div key={category.name}>
+                    <MovieRow title={category.name} movies={category.items} />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          )}
           
           <section className="max-w-screen-2xl mx-auto px-8 md:px-20 mt-12">
              <TrailerGenerator />
