@@ -58,3 +58,7 @@
   @apply transition-all ease-out;
   transition-duration: 250ms;
 }
+
+.animate-hero-zoom {
+  animation-duration: 30000ms;
+}

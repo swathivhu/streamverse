@@ -46,7 +46,7 @@ export default function HomePage() {
             alt="Hero Banner" 
             fill
             priority
-            className="object-cover contrast-[1.25] saturate-[1.25] brightness-75 blur-[1px] animate-in zoom-in-105 duration-[30000ms] fill-mode-forwards"
+            className="object-cover contrast-[1.25] saturate-[1.25] brightness-75 blur-[1px] animate-in zoom-in-105 animate-hero-zoom fill-mode-forwards"
             data-ai-hint="cinema movie"
           />
           <div className="absolute inset-0 hero-gradient-overlay z-10" />
