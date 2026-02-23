@@ -63,8 +63,10 @@ export default function Navbar({ onSearch }: NavbarProps) {
 
   return (
     <nav className="fixed top-0 z-50 w-full bg-black border-b border-white/5 h-20 flex items-center shadow-2xl transition-all duration-300">
-      <div className="max-w-screen-2xl mx-auto px-8 md:px-20 w-full flex items-center justify-between h-full">
-        <div className="flex items-center gap-10 h-full">
+      <div className="max-w-screen-2xl mx-auto px-8 md:px-20 w-full flex items-center h-full">
+        
+        {/* Left Section: Logo & Nav Links */}
+        <div className="flex-1 flex items-center gap-10 h-full">
           <Link href="/home" className="flex items-center gap-2 group shrink-0 py-2">
             <Clapperboard className="w-8 h-8 text-primary" />
             <span className="text-2xl font-black text-primary tracking-tighter uppercase">
@@ -93,27 +95,31 @@ export default function Navbar({ onSearch }: NavbarProps) {
             })}
           </div>
         </div>
-        
-        <div className="flex items-center gap-8 h-full">
-          <div className="flex items-center gap-6">
-            <div className="hidden sm:flex items-center gap-3 bg-zinc-900/50 border border-white/10 rounded-sm px-4 py-1.5 focus-within:border-white/30 transition-all">
-              <Search className="w-4 h-4 text-zinc-400" />
-              <input 
-                type="text"
-                placeholder="Titles, people, genres"
-                className="bg-transparent border-none outline-none text-[13px] text-white placeholder:text-zinc-600 w-32 md:w-64 font-medium"
-                onChange={(e) => onSearch?.(e.target.value)}
-              />
-            </div>
-            
-            <div className="relative cursor-pointer group">
-              <Bell className="w-5 h-5 text-white group-hover:text-zinc-300 transition-colors" />
-              <span className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full border-2 border-black" />
-            </div>
+
+        {/* Center Section: Search Bar Centered */}
+        <div className="hidden sm:flex flex-1 justify-center px-4">
+          <div className="flex items-center gap-3 bg-zinc-900/50 border border-white/10 rounded-sm px-4 py-1.5 focus-within:border-white/30 transition-all w-full max-w-md">
+            <Search className="w-4 h-4 text-zinc-400" />
+            <input 
+              type="text"
+              placeholder="Titles, people, genres"
+              className="bg-transparent border-none outline-none text-[13px] text-white placeholder:text-zinc-600 w-full font-medium"
+              onChange={(e) => onSearch?.(e.target.value)}
+            />
+          </div>
+        </div>
+
+        {/* Right Section: Icons, Username & Profile */}
+        <div className="flex-1 flex items-center justify-end gap-8 h-full">
+          <div className="relative cursor-pointer group">
+            <Bell className="w-5 h-5 text-white group-hover:text-zinc-300 transition-colors" />
+            <span className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full border-2 border-black" />
           </div>
 
           <div className="hidden md:flex flex-col items-end shrink-0 pl-4">
-            <span className="text-[11px] font-semibold text-white tracking-widest uppercase">{userData?.username || 'MEMBER'}</span>
+            <span className="text-[11px] font-semibold text-white tracking-widest uppercase">
+              {userData?.username || 'MEMBER'}
+            </span>
           </div>
           
           <DropdownMenu>
@@ -151,6 +157,7 @@ export default function Navbar({ onSearch }: NavbarProps) {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
+
       </div>
     </nav>
   );
