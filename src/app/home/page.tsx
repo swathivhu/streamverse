@@ -7,7 +7,7 @@ import Navbar from '@/components/navbar';
 import MovieRow from '@/components/movie-row';
 import TrailerGenerator from '@/components/trailer-generator';
 import { CATEGORIES, CONTINUE_WATCHING, Movie } from '@/lib/mock-data';
-import { Play, Info, Clapperboard, Facebook, Instagram, Twitter } from 'lucide-react';
+import { Play, Info, Clapperboard, Facebook, Instagram, Twitter, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useUser } from '@/firebase';
 import { useToast } from '@/hooks/use-toast';
@@ -45,7 +45,7 @@ export default function HomePage() {
             id: m.id.toString(),
             title: m.title || m.name,
             genre: 'Movie',
-            thumbnail: `https://image.tmdb.org/t/p/w500${m.backdrop_path || m.poster_path}`,
+            thumbnail: `https://image.tmdb.org/t/p/w1280${m.backdrop_path || m.poster_path}`,
           }));
           setTrendingMovies(mappedMovies);
         }
@@ -78,7 +78,7 @@ export default function HomePage() {
           title: m.title || m.name,
           genre: 'Movie',
           thumbnail: m.backdrop_path || m.poster_path 
-            ? `https://image.tmdb.org/t/p/w500${m.backdrop_path || m.poster_path}`
+            ? `https://image.tmdb.org/t/p/w780${m.backdrop_path || m.poster_path}`
             : 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80',
         }));
         setSearchResults(mappedResults);
@@ -91,8 +91,6 @@ export default function HomePage() {
   }, []);
 
   const handleMovieClick = async (movieId: string) => {
-    // TMDB IDs are numeric strings. Mock IDs start with letters (t, n, a, s, cw).
-    // We only try to fetch trailers for numeric IDs.
     if (!/^\d+$/.test(movieId)) {
       toast({
         title: "Limited Content",
@@ -228,25 +226,36 @@ export default function HomePage() {
         </div>
       </main>
 
-      {/* Trailer Modal */}
+      {/* Improved Netflix-Style Trailer Modal */}
       <Dialog open={isTrailerModalOpen} onOpenChange={setIsTrailerModalOpen}>
-        <DialogContent className="max-w-5xl bg-black border-zinc-800 p-0 overflow-hidden">
+        <DialogContent className="max-w-[95vw] md:max-w-6xl bg-black border-none p-0 overflow-hidden shadow-[0_0_100px_rgba(0,0,0,1)]">
           <DialogHeader className="sr-only">
             <DialogTitle>Movie Trailer</DialogTitle>
           </DialogHeader>
-          <div className="aspect-video w-full bg-zinc-900 relative">
+          
+          <div className="aspect-video w-full bg-zinc-950 relative group">
             {trailerKey ? (
               <iframe
-                src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&rel=0`}
+                src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3`}
                 className="w-full h-full"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
             ) : (
-              <div className="flex items-center justify-center h-full text-zinc-500">
-                Loading trailer...
+              <div className="flex flex-col items-center justify-center h-full gap-4">
+                <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                <p className="text-zinc-500 text-xs font-bold tracking-widest uppercase">Loading Trailer</p>
               </div>
             )}
+            
+            {/* Prominent Close Button for Premium Feel */}
+            <button 
+              onClick={() => setIsTrailerModalOpen(false)}
+              className="absolute top-4 right-4 z-[60] p-2 bg-black/50 hover:bg-black/80 rounded-full transition-all text-white/70 hover:text-white backdrop-blur-sm border border-white/10"
+              aria-label="Close trailer"
+            >
+              <X className="w-6 h-6" />
+            </button>
           </div>
         </DialogContent>
       </Dialog>
