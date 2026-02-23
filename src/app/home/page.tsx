@@ -1,25 +1,47 @@
+
 "use client";
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Navbar from '@/components/navbar';
 import MovieRow from '@/components/movie-row';
 import TrailerGenerator from '@/components/trailer-generator';
-import { CATEGORIES, CONTINUE_WATCHING } from '@/lib/mock-data';
+import { CATEGORIES, CONTINUE_WATCHING, Movie } from '@/lib/mock-data';
 import { Play, Info, Clapperboard, Facebook, Instagram, Twitter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useUser } from '@/firebase';
 
 export default function HomePage() {
   const { user, isUserLoading } = useUser();
+  const [trendingMovies, setTrendingMovies] = useState<Movie[]>([]);
+  const [isLoadingTrending, setIsLoadingTrending] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    if (!isUserLoading && !user) {
-      router.push('/login');
+    async function fetchMovies() {
+      try {
+        const res = await fetch('/api/tmdb');
+        const data = await res.json();
+        
+        if (data.results) {
+          const mappedMovies: Movie[] = data.results.map((m: any) => ({
+            id: m.id.toString(),
+            title: m.title || m.name,
+            genre: 'Movie',
+            thumbnail: `https://image.tmdb.org/t/p/w500${m.backdrop_path || m.poster_path}`,
+          }));
+          setTrendingMovies(mappedMovies);
+        }
+      } catch (error) {
+        console.error("Failed to fetch trending movies:", error);
+      } finally {
+        setIsLoadingTrending(false);
+      }
     }
-  }, [user, isUserLoading, router]);
+  
+    fetchMovies();
+  }, []);
 
   if (isUserLoading) {
     return (
@@ -31,8 +53,6 @@ export default function HomePage() {
       </div>
     );
   }
-
-  if (!user) return null;
 
   return (
     <div className="min-h-screen bg-black flex flex-col overflow-x-hidden">
@@ -46,15 +66,15 @@ export default function HomePage() {
             alt="Hero Banner" 
             fill
             priority
-            className="object-cover contrast-[1.25] saturate-[1.25] brightness-75 blur-[1px] animate-in zoom-in-105 animate-hero-zoom fill-mode-forwards"
+            className="object-cover contrast-[1.25] saturate-[1.25] brightness-75 blur-[1px] animate-hero-zoom"
             data-ai-hint="cinema movie"
           />
           <div className="absolute inset-0 hero-gradient-overlay z-10" />
           <div className="absolute inset-0 bg-black/40 z-10" />
         </div>
         
-        <div className="relative z-20 flex-grow flex flex-col justify-center pt-16 pb-20 px-8 md:px-20 max-w-screen-2xl mx-auto w-full">
-          <div className="space-y-8 max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000 mt-6">
+        <div className="relative z-20 flex-grow flex flex-col justify-center pt-32 pb-20 px-8 md:px-20 max-w-screen-2xl mx-auto w-full">
+          <div className="space-y-8 max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000 mt-12">
             <div className="flex items-center gap-3">
               <span className="bg-primary px-3 py-1 rounded-sm text-white font-black tracking-widest text-[10px] uppercase shadow-[0_0_15px_rgba(229,9,20,0.5)]">
                 StreamVerse Original
@@ -73,7 +93,7 @@ export default function HomePage() {
             </p>
             
             <div className="flex flex-wrap gap-4 pt-4">
-              <Button size="lg" className="bg-primary hover:brightness-110 text-white h-14 px-10 text-sm font-bold rounded-sm flex items-center gap-3 transition-all active:scale-95 border-none shadow-lg">
+              <Button size="lg" className="bg-[#E50914] hover:brightness-110 text-white h-14 px-10 text-sm font-bold rounded-sm flex items-center gap-3 transition-all active:scale-95 border-none shadow-lg">
                 <Play className="fill-current w-6 h-6" /> Play
               </Button>
               <Button size="lg" variant="secondary" className="bg-zinc-500/30 hover:bg-zinc-500/50 backdrop-blur-sm text-white border-none h-14 px-10 text-sm font-bold rounded-sm flex items-center gap-3 transition-all active:scale-95">
@@ -94,7 +114,10 @@ export default function HomePage() {
           )}
 
           <div className="space-y-24">
-            {CATEGORIES.map((category) => (
+            {trendingMovies.length > 0 && (
+              <MovieRow title="Trending Now" movies={trendingMovies} />
+            )}
+            {CATEGORIES.filter(cat => cat.name !== 'Trending Now').map((category) => (
               <div key={category.name}>
                 <MovieRow title={category.name} movies={category.items} />
               </div>
