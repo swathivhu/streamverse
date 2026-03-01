@@ -5,16 +5,24 @@ import { useRouter } from 'next/navigation';
 import { useUser } from '@/firebase';
 import { Loader2, Clapperboard } from 'lucide-react';
 
+/**
+ * RootPage acts as the primary traffic controller for StreamVerse.
+ * It observes the global authentication state and dispatches users
+ * to either the secure /home dashboard or the /login gateway.
+ */
 export default function RootPage() {
   const router = useRouter();
   const { user, isUserLoading } = useUser();
 
   useEffect(() => {
+    // Only attempt redirection once the initial auth state is determined
     if (!isUserLoading) {
       if (user) {
-        router.push('/home');
+        // Authenticated users are sent to the home experience
+        router.replace('/home');
       } else {
-        router.push('/login');
+        // Unauthenticated users are sent to login
+        router.replace('/login');
       }
     }
   }, [user, isUserLoading, router]);
@@ -27,7 +35,7 @@ export default function RootPage() {
       </div>
       <div className="flex flex-col items-center gap-2">
         <Loader2 className="w-8 h-8 text-zinc-700 animate-spin" />
-        <p className="text-zinc-600 text-sm font-medium">Verifying session...</p>
+        <p className="text-zinc-600 text-[10px] font-black uppercase tracking-[0.3em]">Verifying Identity</p>
       </div>
     </div>
   );

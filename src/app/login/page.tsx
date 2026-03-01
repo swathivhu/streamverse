@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -24,10 +23,13 @@ export default function LoginPage() {
   const auth = useAuth();
   const { user, isUserLoading } = useUser();
 
-  // Unified Redirect Logic: Source of truth is the Auth State
+  /**
+   * Guard logic: If the user is already authenticated, they should not 
+   * be able to access the login page. Redirect them back to the root dispatch.
+   */
   useEffect(() => {
     if (!isUserLoading && user) {
-      router.replace('/home');
+      router.replace('/');
     }
   }, [user, isUserLoading, router]);
 
@@ -35,11 +37,10 @@ export default function LoginPage() {
     e.preventDefault();
     if (isSubmitting) return;
 
-    // Strict validation
     if (!formData.email.trim() || !formData.password.trim()) {
       toast({ 
-        title: "Incomplete Fields", 
-        description: "Please enter both your email and password.", 
+        title: "Missing Credentials", 
+        description: "Please provide your identity and access key.", 
         variant: "destructive" 
       });
       return;
@@ -48,32 +49,26 @@ export default function LoginPage() {
     setIsSubmitting(true);
 
     try {
-      // Initiate sign in
       await signInWithEmailAndPassword(auth, formData.email, formData.password);
-      
       toast({ 
-        title: "Success", 
+        title: "Access Granted", 
         description: "Welcome back to StreamVerse." 
       });
-      // We don't push to /home here; the useEffect observer handles the transition
-      // once the user state is updated globally.
+      // Navigation is handled automatically by the useEffect guard above
     } catch (error: any) {
-      console.error("Login error:", error);
+      console.error("Login attempt failed:", error);
       let message = "Invalid email or password.";
-      if (error.code === 'auth/user-not-found') message = "No account found with this email.";
-      if (error.code === 'auth/wrong-password') message = "Incorrect password.";
-      if (error.code === 'auth/invalid-credential') message = "Invalid credentials provided.";
+      if (error.code === 'auth/invalid-credential') message = "The credentials provided were rejected by the system.";
       
       toast({ 
-        title: "Sign In Failed", 
+        title: "Authentication Failed", 
         description: message, 
         variant: "destructive" 
       });
-      setIsSubmitting(false); // Only allow retry on failure
+      setIsSubmitting(false);
     }
   };
 
-  // Full-screen loader for initial auth check or when already logged in
   if (isUserLoading || (user && !isUserLoading)) {
     return (
       <div className="min-h-screen bg-black flex flex-col items-center justify-center gap-6">
@@ -83,7 +78,7 @@ export default function LoginPage() {
         </div>
         <div className="flex flex-col items-center gap-2">
           <Loader2 className="w-8 h-8 text-zinc-800 animate-spin" />
-          <p className="text-zinc-600 text-[10px] font-black uppercase tracking-[0.3em]">Preparing Experience</p>
+          <p className="text-zinc-600 text-[10px] font-black uppercase tracking-[0.3em]">Preparing Environment</p>
         </div>
       </div>
     );
@@ -91,7 +86,6 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center relative bg-black overflow-hidden selection:bg-primary selection:text-white">
-      {/* Dynamic Background */}
       <div 
         className="absolute inset-0 bg-cover bg-center z-0 opacity-40 scale-110 animate-hero-zoom" 
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1574267432553-4b4628081c31?auto=format&fit=crop&q=80')" }}
