@@ -7,7 +7,7 @@ StreamVerse delivers a cinematic browsing experience with dynamic categories, re
 ---
 
 ## live demo
-https://streamverse-blue.vercel.app
+https://streamverse-aor9.vercel.app
 
 ---
 
