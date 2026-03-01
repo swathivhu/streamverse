@@ -18,6 +18,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
+const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80';
+
 export default function HomePage() {
   const { user, isUserLoading } = useUser();
   const [trendingMovies, setTrendingMovies] = useState<Movie[]>([]);
@@ -57,7 +59,9 @@ export default function HomePage() {
             id: m.id.toString(),
             title: m.title || m.name,
             genre: 'Movie',
-            thumbnail: `https://image.tmdb.org/t/p/w1280${m.backdrop_path || m.poster_path}`,
+            thumbnail: m.backdrop_path || m.poster_path 
+              ? `https://image.tmdb.org/t/p/w1280${m.backdrop_path || m.poster_path}`
+              : FALLBACK_IMAGE,
           }));
 
         setTrendingMovies(mapMovies(trendingData.results));
@@ -94,7 +98,7 @@ export default function HomePage() {
           genre: 'Movie',
           thumbnail: m.backdrop_path || m.poster_path 
             ? `https://image.tmdb.org/t/p/w780${m.backdrop_path || m.poster_path}`
-            : 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80',
+            : FALLBACK_IMAGE,
         }));
         setSearchResults(mappedResults);
       }
@@ -106,6 +110,7 @@ export default function HomePage() {
   }, []);
 
   const handleMovieClick = async (movieId: string) => {
+    // TMDB IDs are numeric. Mock IDs might be 't1', 'cw1', etc.
     if (!/^\d+$/.test(movieId)) {
       toast({
         title: "Limited Content",
@@ -172,8 +177,8 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-black/20 z-10" />
         </div>
         
-        <div className="relative z-20 px-8 md:px-20 max-w-screen-2xl mx-auto w-full pt-20 pb-20">
-          <div className="space-y-8 max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000">
+        <div className="relative z-20 px-8 md:px-20 max-w-screen-2xl mx-auto w-full pt-16 pb-20">
+          <div className="space-y-6 max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000">
             <div className="flex items-center gap-3">
               <span className="bg-primary px-3 py-1 rounded-sm text-white font-black tracking-widest text-[10px] uppercase shadow-[0_0_15px_rgba(229,9,20,0.5)]">
                 StreamVerse Original
@@ -187,16 +192,16 @@ export default function HomePage() {
               </h1>
             </div>
             
-            <p className="text-sm md:text-lg text-zinc-200 leading-[1.6] max-w-xl font-bold drop-shadow-xl">
+            <p className="text-sm md:text-base text-zinc-200 leading-[1.6] max-w-xl font-bold drop-shadow-xl">
               A daring scientist uncovers the price of altering history when she begins receiving warnings from her future self.
             </p>
             
             <div className="flex flex-wrap gap-4 pt-4">
-              <Button size="lg" className="bg-[#E50914] hover:brightness-110 text-white h-14 px-10 text-sm font-bold rounded-sm flex items-center gap-3 transition-all active:scale-95 border-none shadow-lg">
-                <Play className="fill-current w-6 h-6" /> Play
+              <Button size="lg" className="bg-[#E50914] hover:brightness-110 text-white h-12 px-8 text-xs font-bold rounded-sm flex items-center gap-3 transition-all active:scale-95 border-none shadow-lg">
+                <Play className="fill-current w-5 h-5" /> Play
               </Button>
-              <Button size="lg" variant="secondary" className="bg-zinc-500/30 hover:bg-zinc-500/50 backdrop-blur-sm text-white border-none h-14 px-10 text-sm font-bold rounded-sm flex items-center gap-3 transition-all active:scale-95">
-                <Info className="w-6 h-6" /> More Info
+              <Button size="lg" variant="secondary" className="bg-zinc-500/30 hover:bg-zinc-500/50 backdrop-blur-sm text-white border-none h-12 px-8 text-xs font-bold rounded-sm flex items-center gap-3 transition-all active:scale-95">
+                <Info className="w-5 h-5" /> More Info
               </Button>
             </div>
           </div>
@@ -205,9 +210,9 @@ export default function HomePage() {
 
       {/* Main Content */}
       <main className="relative z-10 flex-grow bg-black">
-        <div className="space-y-24 pb-48">
+        <div className="space-y-16 pb-32">
           {searchQuery ? (
-            <div className="animate-in fade-in duration-500 mt-12">
+            <div className="animate-in fade-in duration-500 mt-8">
               <MovieRow 
                 title={isSearching ? `Searching for "${searchQuery}"...` : `Results for "${searchQuery}"`} 
                 movies={searchResults} 
@@ -217,12 +222,12 @@ export default function HomePage() {
           ) : (
             <>
               {CONTINUE_WATCHING.length > 0 && (
-                <div className="animate-in fade-in duration-1000 mt-12">
+                <div className="animate-in fade-in duration-1000 mt-8">
                   <MovieRow title="Continue Watching" movies={CONTINUE_WATCHING} onMovieClick={handleMovieClick} />
                 </div>
               )}
 
-              <div className="space-y-24">
+              <div className="space-y-16">
                 {trendingMovies.length > 0 && (
                   <MovieRow title="Trending Now" movies={trendingMovies} onMovieClick={handleMovieClick} />
                 )}
@@ -276,10 +281,10 @@ export default function HomePage() {
       </Dialog>
 
       {/* Footer */}
-      <footer className="bg-black border-t border-white/5 py-32 px-8 md:px-20 text-zinc-500 text-[11px] font-bold">
+      <footer className="bg-black border-t border-white/5 py-24 px-8 md:px-20 text-zinc-500 text-[11px] font-bold">
         <div className="max-w-screen-2xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-16 mb-24">
-            <div className="space-y-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
+            <div className="space-y-6">
               <div className="flex items-center gap-2 text-primary">
                 <Clapperboard className="w-8 h-8" />
                 <span className="text-2xl font-black uppercase tracking-tighter">StreamVerse</span>
@@ -293,27 +298,27 @@ export default function HomePage() {
                 <Twitter className="w-5 h-5 hover:text-white cursor-pointer transition-colors" />
               </div>
             </div>
-            <div className="space-y-6">
+            <div className="space-y-4">
               <h4 className="text-zinc-400 font-black text-[10px] uppercase tracking-[0.2em]">Explore</h4>
-              <ul className="space-y-3">
+              <ul className="space-y-2">
                 <li className="hover:text-white cursor-pointer transition-colors">TV Shows</li>
                 <li className="hover:text-white cursor-pointer transition-colors">Movies</li>
                 <li className="hover:text-white cursor-pointer transition-colors">Originals</li>
                 <li className="hover:text-white cursor-pointer transition-colors">Trending</li>
               </ul>
             </div>
-            <div className="space-y-6">
+            <div className="space-y-4">
               <h4 className="text-zinc-400 font-black text-[10px] uppercase tracking-[0.2em]">Support</h4>
-              <ul className="space-y-3">
+              <ul className="space-y-2">
                 <li className="hover:text-white cursor-pointer transition-colors">Help Center</li>
                 <li className="hover:text-white cursor-pointer transition-colors">Account</li>
                 <li className="hover:text-white cursor-pointer transition-colors">Privacy Policy</li>
                 <li className="hover:text-white cursor-pointer transition-colors">Contact Us</li>
               </ul>
             </div>
-            <div className="space-y-6">
+            <div className="space-y-4">
               <h4 className="text-zinc-400 font-black text-[10px] uppercase tracking-[0.2em]">Company</h4>
-              <ul className="space-y-3">
+              <ul className="space-y-2">
                 <li className="hover:text-white cursor-pointer transition-colors">Ways to Watch</li>
                 <li className="hover:text-white cursor-pointer transition-colors">Corporate Info</li>
                 <li className="hover:text-white cursor-pointer transition-colors">Investor Relations</li>
@@ -321,9 +326,9 @@ export default function HomePage() {
               </ul>
             </div>
           </div>
-          <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
             <p className="text-[10px] text-zinc-700 uppercase tracking-[0.2em]">© 2025 StreamVerse Entertainment Global.</p>
-            <div className="flex gap-12 text-[10px] text-zinc-700 uppercase tracking-[0.2em]">
+            <div className="flex gap-10 text-[10px] text-zinc-700 uppercase tracking-[0.2em]">
               <span className="hover:text-white cursor-pointer transition-colors">Ad Choices</span>
               <span className="hover:text-white cursor-pointer transition-colors">Cookies</span>
               <span className="hover:text-white cursor-pointer transition-colors">Legal Notices</span>
