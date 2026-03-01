@@ -31,10 +31,6 @@ export default function RegisterPage() {
     e.preventDefault();
     setLoading(true);
 
-    // Debug: Check if Auth is initialized
-    console.log("Registration process started.");
-    console.log("Auth instance available:", !!auth);
-
     if (!formData.username || !formData.email || !formData.phone || !formData.password) {
       toast({ title: "Error", description: "All fields are mandatory.", variant: "destructive" });
       setLoading(false);
@@ -55,13 +51,9 @@ export default function RegisterPage() {
     }
 
     try {
-      console.log("Attempting to create user with email:", formData.email);
-      
       // 1. Create user in Firebase Auth
       const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
       const user = userCredential.user;
-
-      console.log("User created successfully in Firebase Auth. UID:", user.uid);
 
       // 2. Store additional details in Firestore (using the recommended non-blocking pattern)
       const userRef = doc(db, "users", user.uid);
@@ -74,11 +66,8 @@ export default function RegisterPage() {
         viewingHistory: ['Interstellar Journey', 'The Dark Night', 'Robot Dreams'],
       };
 
-      console.log("Initiating Firestore profile creation for UID:", user.uid);
-
       // Non-blocking write to Firestore
       setDoc(userRef, userData).catch(async (error) => {
-        console.error("Non-blocking Firestore profile write failed:", error);
         const permissionError = new FirestorePermissionError({
           path: userRef.path,
           operation: 'create',
@@ -90,14 +79,22 @@ export default function RegisterPage() {
       toast({ title: "Success", description: "Account created successfully!" });
       router.push('/home');
     } catch (error: any) {
-      // Debug: Log the full error object
-      console.error("Registration failed with error object:", error);
-      console.error("Error code:", error.code);
-      console.error("Error message:", error.message);
+      // Map Firebase error codes to user-friendly messages
+      let errorMessage = "Could not complete registration.";
       
+      if (error.code === 'auth/email-already-in-use') {
+        errorMessage = "This email is already associated with an account.";
+      } else if (error.code === 'auth/weak-password') {
+        errorMessage = "The password is too weak. Please use at least 6 characters.";
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = "The email address is invalid.";
+      } else if (error.code === 'auth/operation-not-allowed') {
+        errorMessage = "Email/password accounts are not enabled.";
+      }
+
       toast({ 
         title: "Registration Failed", 
-        description: error.message || "Could not complete registration.", 
+        description: errorMessage, 
         variant: "destructive" 
       });
     } finally {
