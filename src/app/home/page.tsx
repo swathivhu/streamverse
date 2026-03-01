@@ -39,6 +39,13 @@ export default function HomePage() {
   const router = useRouter();
   const { toast } = useToast();
 
+  // Redirect if not logged in
+  useEffect(() => {
+    if (!isUserLoading && !user) {
+      router.push('/login');
+    }
+  }, [user, isUserLoading, router]);
+
   useEffect(() => {
     async function fetchMovies() {
       try {
@@ -75,8 +82,10 @@ export default function HomePage() {
       }
     }
   
-    fetchMovies();
-  }, []);
+    if (user) {
+      fetchMovies();
+    }
+  }, [user]);
 
   const handleSearch = useCallback(async (query: string) => {
     setSearchQuery(query);
@@ -156,6 +165,10 @@ export default function HomePage() {
         </div>
       </div>
     );
+  }
+
+  if (!user && !isUserLoading) {
+    return null;
   }
 
   return (
